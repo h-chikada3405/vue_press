@@ -1,0 +1,146 @@
+@use "sass:meta";
+@use 'sass:math';
+@use './variables' as *;
+
+/**
+ * メディアクエリ
+ *
+ * @param {number} $size 画面サイズ
+ * @param {string} $width max or min
+ * @param {string} $orientation デバイスの向き portrait or landscape
+ */
+@mixin media-query($size: $md, $width: max, $orientation: false) {
+  @if $width == min {
+    $size: $size + 1px;
+  } // @if $width == min
+  @if $orientation == false {
+    @media (#{$width}-width: $size) {
+      @content;
+    } // @media (#{$width}-width: $size)
+  } @else {
+    @media (#{$width}-width: $size) and (orientation: $orientation) {
+      @content;
+    } // @media (#{$width}-width: $size)
+  }
+}
+
+/**
+ * 単位を除いた数値を返す
+ *
+ * @param {number} $value 単位あり数値
+ * @return {number} 単位なし数値
+ * @example strip-unit(16px) => 16
+ *          strip-unit(1rem) => 1
+ */
+@function strip-unit($value) {
+  @if meta.type-of($value) == 'number' and not math.is-unitless($value) {
+    @return math.div($value, ($value * 0 + 1));
+  }
+  @return $value;
+}
+
+/**
+ * pxをremで返す
+ *
+ * @param {number} $number pxサイズ
+ * @return {number} 単位ありremサイズ
+ * @example $root-font-size : 16px の場合
+ *          rem(10) 10px => 0.625rem
+ */
+@function rem($pixel) {
+  @return calc(strip-unit($pixel) / $root-font-size) * 1rem;
+}
+
+/**
+ * clampを使用した可変サイズ指定関数
+ *
+ * @param {number} $min-size 最小サイズpx
+ * @param {number} $max-size 最大サイズpx
+ * @param {number} $min-viewport-px 最小ビューポートpx
+ * @param {number} $max-viewport-px 最大ビューポートpx
+ * @return {string} clamp
+ * @example fluid(16, 32) => clamp(1rem, 1.67vw + 0.667rem, 2rem)
+ *           320pxから1280pxの間で16pxから32pxまでサイズが変わる
+ *          fluid(10px, 18px, 480px, 1024px) => clamp(0.625rem, 1.47vw + 0.184rem, 1.125rem)
+ *           480pxから1024pxの間で10pxから18pxまでサイズが変わる
+ */
+@function fluid($min-size, $max-size, $min-viewport-px: $sm, $max-viewport-px: $xl) {
+  $min: strip-unit($min-size);
+  $max: strip-unit($max-size);
+  $min-viewport: strip-unit($min-viewport-px);
+  $max-viewport: strip-unit($max-viewport-px);
+  $slope: math.div($max - $min, $max-viewport - $min-viewport);
+  $intercept: $min - $slope * $min-viewport;
+  @return clamp(#{rem($min)}, #{$slope * 100vw} + #{rem($intercept)}, #{rem($max)});
+}
+
+/**
+ * フォントサイズ
+ *
+ * @param {number} $pixel フォントサイズ、px基準で指定
+ */
+@mixin font-size($pixel) {
+  font-size: strip-unit($pixel) + px;
+  font-size: rem($pixel);
+}
+
+/**
+ * 可変フォントサイズ
+ *
+ * @param {number} $min-px 最小サイズpx
+ * @param {number} $max-px 最大サイズpx
+ * @param {number} $min-viewport-px 最小ビューポートpx
+ * @param {number} $max-viewport-px 最大ビューポートpx
+ */
+@mixin fluid-font-size($min-size, $max-size, $min-width: $sm, $max-width: $xl) {
+  font-size: fluid($min-size, $max-size, $min-width, $max-width);
+}
+
+/**
+ * トランジション
+ *
+ * @param {number} $time トランジションの時間
+ * @param {string} $easing イージングの指定
+ */
+@mixin transition($time: 0.3s, $easing: ease) {
+  transition: all $time $easing;
+}
+
+/**
+ * 疑似要素を使用したアイコンフォント
+ *
+ * @param {string} $code アイコンコード
+ * @param {number} $size フォントサイズ
+ * @param {number} $weight フォントウェイト
+ * @param {string} $color フォントカラー
+ * @param {string} $family フォントファミリー Material Symbols Outlined or Font Awesome 6 Pro
+ */
+@mixin icon-font($code, $size: 16, $weight: 400, $color: $font-color, $family: $icon-font-family) {
+  content: unquote('"') + unquote(str-insert($code, '\\', 1)) + unquote('"');
+  display: inline-block;
+  font-family: '#{$family}';
+  @include font-size($size);
+  font-weight: $weight;
+  color: $color;
+}
+
+/**
+ * スクロールバー
+ *
+ * @param {number} $width 横幅
+ * @param {number} $track-color トラックの色
+ * @param {number} $thumb-color スクロールバーの色
+ */
+@mixin scrollbar($width: 5px, $track-color: $base-color, $thumb-color: $main-color) {
+  &::-webkit-scrollbar {
+    width: $width;
+  } //&::-webkit-scrollbar
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  } //&::-webkit-scrollbar-track
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+  } //&::-webkit-scrollbar-thumb
+}

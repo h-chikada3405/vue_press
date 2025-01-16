@@ -1,0 +1,110 @@
+@use './_variables' as *;
+@use './_mixin' as *;
+
+/*-------------------------------------------------------------------------------
+  body global
+--------------------------------------------------------------------------------*/
+body {
+  @include font-size($font-size);
+  color: $font-color;
+  font-family: $font-family;
+  line-height: $line-height;
+  background: $base-color;
+  overflow-x: hidden;
+} // body
+
+/*-------------------------------------------------------------------------------
+  img global
+--------------------------------------------------------------------------------*/
+img {
+  max-width: 100%;
+  object-fit: cover;
+} // img
+
+/*-------------------------------------------------------------------------------
+  link global
+--------------------------------------------------------------------------------*/
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  @include media-query($md, min) {
+    @include transition();
+  } // @include media-query($md, min)
+
+  &[href],
+  &[data-href] {
+    cursor: pointer;
+  } // &[href], &[data-href]
+} // a
+
+/*-------------------------------------------------------------------------------
+  table global
+--------------------------------------------------------------------------------*/
+table {
+  width: 100%;
+
+  th {
+    font-weight: bold;
+    vertical-align: text-top;
+  } // th
+
+  th,
+  td {
+    text-align: left;
+  } // th, td
+} // table
+
+/*-------------------------------------------------------------------------------
+  text global
+--------------------------------------------------------------------------------*/
+strong,
+b {
+  font-weight: bold;
+} // strong, b
+
+em {
+  font-style: italic;
+} // em
+
+/*-------------------------------------------------------------------------------
+  input global
+--------------------------------------------------------------------------------*/
+input[type='text'],
+input[type='tel'],
+input[type='email'],
+input[type='url'],
+input[type='search'],
+input[type='password'],
+input[type='number'],
+input[type='file'],
+input[type='date'],
+textarea {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &::placeholder {
+    color: $placeholder-color;
+  } // &::placeholder
+} // input
+
+select,
+label {
+  width: 100%;
+  cursor: pointer;
+} // select, label
+
+/*-------------------------------------------------------------------------------
+  input button global
+--------------------------------------------------------------------------------*/
+input[type='submit'],
+input[type='reset'],
+input[type='button'],
+button {
+  cursor: pointer;
+
+  @include media-query($md, min) {
+    @include transition();
+  } // @include media-query($md, min)
+} // input[type="submit"], input[type="reset"], input[type="button"], button

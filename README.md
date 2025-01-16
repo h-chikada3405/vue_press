@@ -9,6 +9,8 @@ wordpress のインストール・起動
 ```bash
 bun run wp-env start
 ```
+- ユーザー名：admin
+- パスワード：password
 
 vue 環境構築
 ```bash
