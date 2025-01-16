@@ -5,7 +5,7 @@ node_modules のインストール
 bun install
 ```
 
-wp-env のインストール
+wordpress のインストール・起動
 ```bash
 bun run wp-env start
 ```
@@ -20,8 +20,8 @@ bun run dev
 | コマンド | 説明 |
 | --- | --- |
 | `npm run dev` | vue 環境構築 |
-| `npm run wp-env start` | wp-env インストール |
-| `npm run wp-env stop` | wp-env 停止 |
+| `npm run wp-env start` | wordpress インストール |
+| `npm run wp-env stop` | wordpress 停止 |
 | `wp-env run cli wp config get table_prefix` | テーブルプレフィックス確認 |
 | `wp-env run cli wp db export sql/db.sql` | データベースエクスポート |
 | `wp-env run cli wp db import sql/db.sql` | データベースインポート |
