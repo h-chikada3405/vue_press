@@ -11,7 +11,8 @@
   "config": {
     "WP_DEBUG": true,
     "WP_MEMORY_LIMIT": "256M",
-    "WP_DEFAULT_THEME": "theme"
+    "WP_DEFAULT_THEME": "theme",
+    "table_prefix": "wp_"
   },
   "port": 8000,
   "testsPort": 8001,
