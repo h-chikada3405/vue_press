@@ -1,0 +1,24 @@
+{
+  "phpVersion": "7.2",
+  "core": "https://ja.wordpress.org/latest-ja.zip",
+  "themes": [
+    "./wp/themes/theme"
+  ],
+  "plugins": [
+    "https://downloads.wordpress.org/plugin/classic-editor.zip",
+    "https://downloads.wordpress.org/plugin/wp-multibyte-patch.zip"
+  ],
+  "config": {
+    "WP_DEBUG": true,
+    "WP_MEMORY_LIMIT": "256M",
+    "WP_DEFAULT_THEME": "theme"
+  },
+  "port": 8000,
+  "testsPort": 8001,
+  "mappings": {
+    "wp-content/themes/theme/": "./theme/",
+    "wp-content/uploads/": "./wp/uploads/",
+    "wp-content/plugins/": "./wp/plugins/",
+    "sql/": "./sql/"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "vue_press",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite-ssg build",
+    "preview": "vite preview",
+    "fix": "biome check --fix --unsafe ./src/"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.5.13",
+    "@vue/server-renderer": "^3.5.13",
+    "vite-ssg": "^25.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.0.13"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "@wordpress/env": "^10.15.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.5",
+    "vite-plugin-pages": "^0.32.4",
+    "vue-tsc": "^2.2.0"
+  }
+}
