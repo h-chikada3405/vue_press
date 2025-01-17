@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite && vite build --watch",
     "build": "vite-ssg build",
     "preview": "vite preview",
-    "fix": "biome check --fix --unsafe ./src/"
+    "fix": "biome check --fix --unsafe ./src/",
+    "wp-env": "wp-env"
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.5.13",

@@ -113,3 +113,9 @@ function top_basic_switch_theme() {
   update_option('large_size_h', $GLOBALS['content_width']);
 }
 add_action('after_switch_theme', 'top_basic_switch_theme');
+
+/**
+ * 外部ファイル読み込み
+ */
+require get_parent_theme_file_path('/inc/read_files.php');  // ファイル読み込み設定
+require get_parent_theme_file_path('/inc/custom_post.php');	// カスタム投稿設定
