@@ -7,16 +7,25 @@
  */
 
 /**
- * 管理画面用スタイルシート読み込み
+ * ブロックエディタ用スタイル読み込み
  */
-function set_admin_styles() {
-  wp_enqueue_style('block-editor-style', get_theme_file_uri('/css/editor.css'), array(), wp_get_theme()->get('Version'));
+function set_block_editor_styles(): void {
+  add_editor_style('css/editor-style.css');
+  add_theme_support('editor-styles');
 }
-add_action('wp_enqueue_scripts', 'set_admin_styles');
+add_action('after_setup_theme', 'set_block_editor_styles');
 
 /**
- * 管理画面用Javascript読み込み
+ * 管理画面用 css 読み込み
  */
-function set_admin_scripts() {
+function set_admin_styles(): void {
+  wp_enqueue_style('Noto Sans', 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Zen+Kaku+Gothic+New&display=swap', array(), null);
+}
+add_action('admin_enqueue_scripts', 'set_admin_styles');
+
+/**
+ * 管理画面用 Javascript 読み込み
+ */
+function set_admin_scripts(): void {
 }
 add_action('admin_enqueue_scripts', 'set_admin_scripts');

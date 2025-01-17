@@ -5,7 +5,6 @@
     "./wp/themes/theme"
   ],
   "plugins": [
-    "https://downloads.wordpress.org/plugin/classic-editor.zip",
     "https://downloads.wordpress.org/plugin/wp-multibyte-patch.zip"
   ],
   "config": {

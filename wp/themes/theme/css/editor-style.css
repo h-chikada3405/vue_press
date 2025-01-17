@@ -1,0 +1,565 @@
+@charset "UTF-8";
+/*-------------------------------------------------------------------------------
+  media query
+--------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------
+  font setting
+--------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------
+  color setting
+--------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------
+  space setting
+--------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------
+  border setting
+--------------------------------------------------------------------------------*/
+/**
+ * メディアクエリ
+ *
+ * @param {number} $size 画面サイズ
+ * @param {string} $width max or min
+ * @param {string} $orientation デバイスの向き portrait or landscape
+ */
+/**
+ * 単位を除いた数値を返す
+ *
+ * @param {number} $value 単位あり数値
+ * @return {number} 単位なし数値
+ * @example strip-unit(16px) => 16
+ *          strip-unit(1rem) => 1
+ */
+/**
+ * pxをremで返す
+ *
+ * @param {number} $number pxサイズ
+ * @return {number} 単位ありremサイズ
+ * @example $root-font-size : 16px の場合
+ *          rem(10) 10px => 0.625rem
+ */
+/**
+ * clampを使用した可変サイズ指定関数
+ *
+ * @param {number} $min-size 最小サイズpx
+ * @param {number} $max-size 最大サイズpx
+ * @param {number} $min-viewport-px 最小ビューポートpx
+ * @param {number} $max-viewport-px 最大ビューポートpx
+ * @return {string} clamp
+ * @example fluid(16, 32) => clamp(1rem, 1.67vw + 0.667rem, 2rem)
+ *           320pxから1280pxの間で16pxから32pxまでサイズが変わる
+ *          fluid(10px, 18px, 480px, 1024px) => clamp(0.625rem, 1.47vw + 0.184rem, 1.125rem)
+ *           480pxから1024pxの間で10pxから18pxまでサイズが変わる
+ */
+/**
+ * フォントサイズ
+ *
+ * @param {number} $pixel フォントサイズ、px基準で指定
+ */
+/**
+ * 可変フォントサイズ
+ *
+ * @param {number} $min-px 最小サイズpx
+ * @param {number} $max-px 最大サイズpx
+ * @param {number} $min-viewport-px 最小ビューポートpx
+ * @param {number} $max-viewport-px 最大ビューポートpx
+ */
+/**
+ * トランジション
+ *
+ * @param {number} $time トランジションの時間
+ * @param {string} $easing イージングの指定
+ */
+/**
+ * 疑似要素を使用したアイコンフォント
+ *
+ * @param {string} $code アイコンコード
+ * @param {number} $size フォントサイズ
+ * @param {number} $weight フォントウェイト
+ * @param {string} $color フォントカラー
+ * @param {string} $family フォントファミリー Material Symbols Outlined or Font Awesome 6 Pro
+ */
+/**
+ * スクロールバー
+ *
+ * @param {number} $width 横幅
+ * @param {number} $track-color トラックの色
+ * @param {number} $thumb-color スクロールバーの色
+ */
+/*-------------------------------------------------------------------------------
+  body global
+--------------------------------------------------------------------------------*/
+body {
+  font-size: 16px;
+  font-size: 1rem;
+  color: #222222;
+  font-family: "Noto Sans JP", "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", sans-serif;
+  line-height: 1.8;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+/*-------------------------------------------------------------------------------
+  img global
+--------------------------------------------------------------------------------*/
+img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/*-------------------------------------------------------------------------------
+  link global
+--------------------------------------------------------------------------------*/
+a {
+  color: #00a0e9;
+  text-decoration: none;
+}
+@media (min-width: 769px) {
+  a {
+    transition: all 0.3s ease;
+  }
+}
+a[href], a[data-href] {
+  cursor: pointer;
+}
+
+/*-------------------------------------------------------------------------------
+  table global
+--------------------------------------------------------------------------------*/
+table {
+  width: 100%;
+}
+table th {
+  font-weight: bold;
+  vertical-align: text-top;
+}
+table th,
+table td {
+  text-align: left;
+}
+
+/*-------------------------------------------------------------------------------
+  text global
+--------------------------------------------------------------------------------*/
+strong,
+b {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+/*-------------------------------------------------------------------------------
+  input global
+--------------------------------------------------------------------------------*/
+input[type=text],
+input[type=tel],
+input[type=email],
+input[type=url],
+input[type=search],
+input[type=password],
+input[type=number],
+input[type=file],
+input[type=date],
+textarea {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+input[type=text]::placeholder,
+input[type=tel]::placeholder,
+input[type=email]::placeholder,
+input[type=url]::placeholder,
+input[type=search]::placeholder,
+input[type=password]::placeholder,
+input[type=number]::placeholder,
+input[type=file]::placeholder,
+input[type=date]::placeholder,
+textarea::placeholder {
+  color: #d5d5d5;
+}
+
+select,
+label {
+  width: 100%;
+  cursor: pointer;
+}
+
+/*-------------------------------------------------------------------------------
+  input button global
+--------------------------------------------------------------------------------*/
+input[type=submit],
+input[type=reset],
+input[type=button],
+button {
+  cursor: pointer;
+}
+@media (min-width: 769px) {
+  input[type=submit],
+  input[type=reset],
+  input[type=button],
+  button {
+    transition: all 0.3s ease;
+  }
+}
+
+.wp-post_content, body {
+  inline-size: 100%;
+  margin-inline: auto;
+  /*----------------------------------------
+    heading
+  ------------------------------------------*/
+  /*----------------------------------------
+    list
+  ------------------------------------------*/
+  /*----------------------------------------
+    table
+  ------------------------------------------*/
+  /*----------------------------------------
+    image
+  ------------------------------------------*/
+  /*----------------------------------------
+    align
+  ------------------------------------------*/
+}
+@media (max-width: 768px) {
+  .wp-post_content, body {
+    inline-size: 90%;
+  }
+}
+.wp-post_content > *:not(.has-custom-width), body > *:not(.has-custom-width) {
+  inline-size: 100%;
+}
+@media (max-width: 768px) {
+  .wp-post_content > *:not(.has-custom-width), body > *:not(.has-custom-width) {
+    inline-size: 100%;
+  }
+}
+.wp-post_content > *, body > * {
+  margin-inline: auto;
+  margin-block-end: clamp(0.625rem, 1.3908205841vw + 0.2077538248rem, 1.25rem);
+}
+.wp-post_content h1, body h1,
+.wp-post_content h2,
+body h2,
+.wp-post_content h3,
+body h3,
+.wp-post_content h4,
+body h4,
+.wp-post_content h5,
+body h5,
+.wp-post_content h6,
+body h6 {
+  font-weight: 700;
+}
+.wp-post_content h1.has-background, body h1.has-background,
+.wp-post_content h2.has-background,
+body h2.has-background,
+.wp-post_content h3.has-background,
+body h3.has-background,
+.wp-post_content h4.has-background,
+body h4.has-background,
+.wp-post_content h5.has-background,
+body h5.has-background,
+.wp-post_content h6.has-background,
+body h6.has-background {
+  padding: fuild;
+}
+.wp-post_content h1:not([class*=is-style-ttl]), body h1:not([class*=is-style-ttl]) {
+  font-size: var(--wp--preset--font-size--extra);
+  line-height: 1.8;
+}
+.wp-post_content h2:not([class*=is-style-ttl]), body h2:not([class*=is-style-ttl]) {
+  font-size: var(--wp--preset--font-size--large);
+  line-height: 1.8;
+}
+.wp-post_content h3:not([class*=is-style-ttl]), body h3:not([class*=is-style-ttl]) {
+  font-size: var(--wp--preset--font-size--medium);
+  line-height: 1.8;
+}
+.wp-post_content h4:not([class*=is-style-ttl]), body h4:not([class*=is-style-ttl]) {
+  font-size: var(--wp--preset--font-size--middle);
+  line-height: 1.8;
+}
+.wp-post_content h5:not([class*=is-style-ttl]), body h5:not([class*=is-style-ttl]) {
+  font-size: var(--wp--preset--font-size--regular);
+  line-height: 1.8;
+}
+.wp-post_content h6:not([class*=is-style-ttl]), body h6:not([class*=is-style-ttl]) {
+  font-size: var(--wp--preset--font-size--small);
+  line-height: 1.8;
+}
+.wp-post_content h1, body h1,
+.wp-post_content h2,
+body h2,
+.wp-post_content h3,
+body h3 {
+  margin-block-end: clamp(0.625rem, 1.3908205841vw + 0.2077538248rem, 1.25rem);
+}
+.wp-post_content h4, body h4,
+.wp-post_content h5,
+body h5,
+.wp-post_content h6,
+body h6 {
+  margin-block-end: clamp(0.625rem, 1.3908205841vw + 0.2077538248rem, 1.25rem);
+}
+.wp-post_content p, body p {
+  font-size: clamp(1rem, 0.2732240437vw + 0.868852459rem, 1.125rem);
+}
+.wp-post_content s, body s {
+  text-decoration-line: line-through;
+}
+.wp-post_content ol:not([class*=is-style]), body ol:not([class*=is-style]),
+.wp-post_content ul:not([class*=is-style]),
+body ul:not([class*=is-style]) {
+  --start_gap: 20px;
+}
+.wp-post_content ol:not([class*=is-style]) > li, body ol:not([class*=is-style]) > li,
+.wp-post_content ul:not([class*=is-style]) > li,
+body ul:not([class*=is-style]) > li {
+  position: relative;
+  margin-inline: 0;
+  max-width: 100%;
+}
+.wp-post_content ol:not([class*=is-style]) > li::before, body ol:not([class*=is-style]) > li::before,
+.wp-post_content ul:not([class*=is-style]) > li::before,
+body ul:not([class*=is-style]) > li::before {
+  position: absolute;
+  left: 0;
+}
+.wp-post_content ol:not([class*=is-style]) > li ul, body ol:not([class*=is-style]) > li ul,
+.wp-post_content ol:not([class*=is-style]) > li ol,
+body ol:not([class*=is-style]) > li ol,
+.wp-post_content ul:not([class*=is-style]) > li ul,
+body ul:not([class*=is-style]) > li ul,
+.wp-post_content ul:not([class*=is-style]) > li ol,
+body ul:not([class*=is-style]) > li ol {
+  max-width: 100%;
+  inline-size: 100%;
+  margin-block-end: 0;
+  margin-inline: 0;
+}
+.wp-post_content ol:not([class*=is-style]), body ol:not([class*=is-style]) {
+  list-style: none;
+  counter-reset: list_number 0;
+}
+.wp-post_content ol:not([class*=is-style]) > li, body ol:not([class*=is-style]) > li {
+  padding-left: calc(var(--wp--preset--spacing--20) + 1rem + 10px);
+  counter-increment: list_number 1;
+}
+.wp-post_content ol:not([class*=is-style]) > li::before, body ol:not([class*=is-style]) > li::before {
+  content: counter(list_number, decimal-leading-zero) ".";
+  margin-inline-end: var(--wp--preset--spacing--20);
+}
+.wp-post_content ol:not([class*=is-style]) ol, body ol:not([class*=is-style]) ol {
+  counter-reset: list_number;
+}
+.wp-post_content ul:not([class*=is-style]), body ul:not([class*=is-style]) {
+  --cercle: 10px;
+  list-style: none;
+}
+.wp-post_content ul:not([class*=is-style]) > li, body ul:not([class*=is-style]) > li {
+  padding-left: calc(var(--wp--preset--spacing--20) + var(--cercle));
+}
+.wp-post_content ul:not([class*=is-style]) > li::before, body ul:not([class*=is-style]) > li::before {
+  content: "";
+  inline-size: var(--cercle);
+  min-inline-size: var(--cercle);
+  aspect-ratio: 1;
+  border-radius: calc(infinity * 1px);
+  background: #00a0e9;
+  top: 0.5rem;
+}
+.wp-post_content table:not([class*=is-style]) thead, body table:not([class*=is-style]) thead,
+.wp-post_content table:not([class*=is-style]) tbody,
+body table:not([class*=is-style]) tbody,
+.wp-post_content table:not([class*=is-style]) tfoot,
+body table:not([class*=is-style]) tfoot {
+  border: none;
+}
+.wp-post_content table:not([class*=is-style]) thead th, body table:not([class*=is-style]) thead th,
+.wp-post_content table:not([class*=is-style]) thead td,
+body table:not([class*=is-style]) thead td,
+.wp-post_content table:not([class*=is-style]) tbody th,
+body table:not([class*=is-style]) tbody th,
+.wp-post_content table:not([class*=is-style]) tbody td,
+body table:not([class*=is-style]) tbody td,
+.wp-post_content table:not([class*=is-style]) tfoot th,
+body table:not([class*=is-style]) tfoot th,
+.wp-post_content table:not([class*=is-style]) tfoot td,
+body table:not([class*=is-style]) tfoot td {
+  border: none;
+  padding: var(--wp--preset--spacing--20);
+}
+.wp-post_content figure img, body figure img {
+  border-radius: 10px;
+  max-block-size: 100svh;
+  object-fit: cover;
+}
+.wp-post_content *:has([class*=align])::after, body *:has([class*=align])::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.wp-post_content *:has([class*=align]) > a, body *:has([class*=align]) > a,
+.wp-post_content *:has([class*=align]) > figure,
+body *:has([class*=align]) > figure {
+  margin-block-end: 0;
+}
+.wp-post_content *:has([class*=align]) > a figcaption, body *:has([class*=align]) > a figcaption,
+.wp-post_content *:has([class*=align]) > figure figcaption,
+body *:has([class*=align]) > figure figcaption {
+  margin-block-end: 0;
+}
+
+:root {
+  --editor-radius: 1px;
+}
+
+/*-------------------------------------------------------------------------------
+  body
+--------------------------------------------------------------------------------*/
+.editor-styles-wrapper.block-editor-writing-flow,
+body.editor-styles-wrapper {
+  padding-block-end: var(--wp--preset--spacing--80);
+  background: #FFF;
+}
+.editor-styles-wrapper.block-editor-writing-flow ::selection,
+body.editor-styles-wrapper ::selection {
+  background: rgba(0, 160, 233, 0.5);
+  color: #fff;
+}
+
+/*-------------------------------------------------------------------------------
+  html
+--------------------------------------------------------------------------------*/
+html :where(.wp-block) {
+  max-width: 90%;
+}
+
+/*-------------------------------------------------------------------------------
+  WP blocks
+--------------------------------------------------------------------------------*/
+.wp-block {
+  inline-size: 100%;
+  border: 1px dashed rgba(0, 0, 0, 0);
+  border-radius: var(--editor-radius);
+  /*----------------------------------------
+    選択時
+  ------------------------------------------*/
+  /*----------------------------------------
+    title
+  ------------------------------------------*/
+  /*----------------------------------------
+    ブロック要素
+  ------------------------------------------*/
+  /*----------------------------------------
+    align
+  ------------------------------------------*/
+}
+@media (max-width: 768px) {
+  .wp-block {
+    inline-size: 90%;
+  }
+}
+.wp-block:not(li) {
+  margin-inline: auto;
+  margin-block-end: clamp(0.625rem, 1.3908205841vw + 0.2077538248rem, 1.25rem);
+}
+.wp-block:not(li):not(.wp-block-button) {
+  padding: var(--wp--preset--spacing--20);
+}
+.wp-block > *.is-selected, .wp-block.is-selected {
+  border-color: rgba(0, 160, 233, 0.3);
+}
+.wp-block > *.is-selected::after, .wp-block.is-selected::after {
+  border: 1px dashed rgba(0, 160, 233, 0.3);
+  outline: none !important;
+  border-radius: var(--editor-radius) !important;
+}
+.wp-block:not([contenteditable=true]):focus::after {
+  display: none;
+}
+.wp-block:focus {
+  outline: none;
+  border-radius: var(--editor-radius);
+}
+.wp-block.wp-block-post-title {
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1.2173913043;
+}
+.wp-block li {
+  padding-block-end: 0;
+}
+.wp-block li ul {
+  padding-block: 0;
+}
+.wp-block.wp-block-button:not(.has-custom-width) {
+  inline-size: auto;
+}
+.wp-block[data-align] {
+  padding: 0;
+  block-size: auto;
+}
+.wp-block[data-align]::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.wp-block[data-align] > * {
+  padding: var(--wp--preset--spacing--20);
+}
+.wp-block[data-align] > a,
+.wp-block[data-align] > figure {
+  margin-block-end: 0;
+}
+.wp-block[data-align] > a figcaption,
+.wp-block[data-align] > figure figcaption {
+  margin-block-end: 0;
+  display: block;
+}
+
+/*-------------------------------------------------------------------------------
+  title
+--------------------------------------------------------------------------------*/
+.is-style-ttl__border {
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  align-items: stretch;
+  gap: 0 var(--wp--preset--spacing--20);
+}
+.is-style-ttl__border::before {
+  content: "";
+  inline-size: 3px;
+  display: block;
+  background: #00a0e9;
+}
+
+.is-style-ttl__beta {
+  padding: var(--wp--preset--spacing--20);
+  background: #00a0e9;
+  color: #FFF;
+}
+
+/*-------------------------------------------------------------------------------
+  gallery
+--------------------------------------------------------------------------------*/
+.is-style-gallery__uniform.has-nested-images figure {
+  flex-grow: unset;
+}
+.is-style-gallery__uniform figure {
+  inline-size: calc(33.3333333333% - var(--wp--style--block-gap) * 2 / 3);
+  block-size: auto;
+}
+.is-style-gallery__uniform img {
+  inline-size: 100% !important;
+}
+.is-style-gallery__uniform figure,
+.is-style-gallery__uniform img {
+  flex-grow: unset !important;
+  aspect-ratio: 4/3;
+}
+.is-style-gallery__uniform .components-drop-zone {
+  flex-grow: unset !important;
+}
