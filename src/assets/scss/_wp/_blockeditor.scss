@@ -1,0 +1,204 @@
+@use '../_includes/variables' as *;
+@use '../_includes/mixin' as *;
+
+.wp-post_content {
+  inline-size: 100%;
+  margin-inline: auto;
+
+  @include media-query($md) {
+    inline-size: 90%;
+  } // @include media-query($md)
+
+  >*:not(.has-custom-width) {
+    inline-size: 100%;
+
+    @include media-query($md) {
+      inline-size: 100%;
+    } // @include media-query($md)
+  } // >*:not(.has-custom-width)
+
+  >* {
+    margin-inline: auto;
+    margin-block-end: fluid($space-size,$space-size * 2);
+  } // >*
+
+  /*----------------------------------------
+    heading
+  ------------------------------------------*/
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+
+    &.has-background {
+      padding: fuild;
+    } // &.has-background
+  }
+
+  $headings: (
+    h1: var(--wp--preset--font-size--extra),
+    h2: var(--wp--preset--font-size--large),
+    h3: var(--wp--preset--font-size--medium),
+    h4: var(--wp--preset--font-size--middle),
+    h5: var(--wp--preset--font-size--regular),
+    h6: var(--wp--preset--font-size--small)
+  );
+
+  @mixin set-font-size($heading, $size) {
+    #{$heading} {
+      &:not([class*='is-style-ttl']) {
+        font-size: $size;
+        line-height: $line-height;
+      }
+    }
+  }
+
+  @each $heading, $size in $headings {
+    @include set-font-size($heading, $size);
+  }
+
+  h1,
+  h2,
+  h3 {
+    margin-block-end: fluid($space-size,$space-size * 2);
+  } // h1,   h2, h3
+
+  h4,
+  h5,
+  h6 {
+    margin-block-end: fluid($space-size,$space-size * 2);
+  } // h4,   h5, h6
+
+  p {
+    @include fluid-font-size($font-size, $font-size + 2, $md, 1500px);
+  } // p
+
+  s {
+    text-decoration-line: line-through;
+  } // s
+
+  /*----------------------------------------
+    list
+  ------------------------------------------*/
+  ol,
+  ul {
+    &:not([class*="is-style"]) {
+      --start_gap : 20px;
+
+      >li {
+        position: relative;
+        margin-inline: 0;
+        max-width: 100%;
+
+        &::before {
+          position: absolute;
+          left: 0;
+        } // &::before
+
+        ul,
+        ol {
+          max-width: 100%;
+          inline-size: 100%;
+          margin-block-end: 0;
+          margin-inline: 0;
+        } // ul, ol
+      } // >li
+    }
+  } // &:not([class*="is-style"])
+
+  ol {
+    &:not([class*="is-style"]) {
+      list-style: none;
+      counter-reset: list_number 0;
+
+      >li {
+        padding-left: calc(var(--wp--preset--spacing--20) + 1rem + 10px);
+        counter-increment: list_number 1;
+
+        &::before {
+          content: counter(list_number, decimal-leading-zero) ".";
+          margin-inline-end: var(--wp--preset--spacing--20);
+        } // &::before
+      } // >li
+
+      ol {
+        counter-reset: list_number;
+      }
+    }
+  } // ol
+
+  ul {
+    &:not([class*="is-style"]) {
+      --cercle    : 10px;
+      list-style: none;
+
+      >li {
+        padding-left: calc(var(--wp--preset--spacing--20) + var(--cercle));
+
+        &::before {
+          content: '';
+          inline-size: var(--cercle);
+          min-inline-size: var(--cercle);
+          aspect-ratio: 1;
+          border-radius: calc(1px / 0);
+          background: $main-color;
+          top: calc(1rem / 2);
+        } // &::before
+      } // >li
+    } // &:not([class*="is-style"])
+  } // ul
+
+  /*----------------------------------------
+    table
+  ------------------------------------------*/
+  table {
+    &:not([class*="is-style"]) {
+      thead,
+      tbody,
+      tfoot {
+        border: none;
+
+        th,
+        td {
+          border: none;
+          padding: var(--wp--preset--spacing--20);
+        } // th, td
+      } // thead,
+    } // &:not([class*="is-style"])
+  } // table
+
+  /*----------------------------------------
+    image
+  ------------------------------------------*/
+  figure {
+    img {
+      border-radius: 10px;
+      max-block-size: 100svh;
+      object-fit: cover;
+    } // img
+  } // figure
+
+  /*----------------------------------------
+    align
+  ------------------------------------------*/
+  *:has([class*="align"]) {
+
+    &::after {
+      content: '';
+      clear: both;
+      display: block;
+    } // &::after
+
+    >a,
+    >figure {
+      margin-block-end: 0;
+
+      figcaption {
+        margin-block-end: 0;
+      } // figcaption
+    } // >figure
+  } // *:has([class*="align"])
+} // .wp-post_content

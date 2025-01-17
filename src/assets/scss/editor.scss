@@ -1,0 +1,8 @@
+@use "_includes/global" as *;
+@use '_wp/blockeditor' as *;
+@use '_wp/blockeditor_admin' as *;
+@use '_wp/style' as *;
+
+body {
+  @extend .wp-post_content;
+} // body

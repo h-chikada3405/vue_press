@@ -1,7 +1,8 @@
 import { ViteSSG } from 'vite-ssg'
 import generatedRoutes from 'virtual:generated-pages'
 import App from './App.vue'
-import './assets/scss/style.scss'
+import * as apis from './utils/api'
+import './assets/scss/design.scss'
 
 const routes = generatedRoutes
 
@@ -9,7 +10,8 @@ const routes = generatedRoutes
 export const createApp = ViteSSG(
   App,
   { routes },
-  ({ router }) => {
+  ({ app, router }) => {
+    app.config.globalProperties.$apis = apis
     router.beforeEach((to, _, next) => {
       console.log(`Navigating to ${to.path}`);
       next();

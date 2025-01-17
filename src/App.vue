@@ -2,7 +2,6 @@
   <div id="app">
     <LayoutHeader />
     <main>
-      <button @click="animation">アニメーション開始</button>
       <router-view />
     </main>
     <LayoutFooter />

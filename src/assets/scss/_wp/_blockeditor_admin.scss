@@ -1,0 +1,128 @@
+@use '../_includes/variables' as *;
+@use '../_includes/mixin' as *;
+
+:root {
+  --editor-radius: 1px;
+} // :root
+
+/*-------------------------------------------------------------------------------
+  body
+--------------------------------------------------------------------------------*/
+.editor-styles-wrapper.block-editor-writing-flow,
+body.editor-styles-wrapper {
+  padding-block-end: var(--wp--preset--spacing--80);
+  background: #FFF;
+
+  ::selection {
+    background: rgba($main-color, 0.5);
+    color: #fff;
+  } // ::selection
+} // body.editor-styles-wrapper
+
+/*-------------------------------------------------------------------------------
+  html
+--------------------------------------------------------------------------------*/
+html :where(.wp-block) {
+  max-width: 90%;
+} // html :where(.wp-block)
+
+/*-------------------------------------------------------------------------------
+  WP blocks
+--------------------------------------------------------------------------------*/
+.wp-block {
+  inline-size: 100%;
+  border: 1px dashed rgba(#000,0);
+  border-radius: var(--editor-radius);
+
+  @include media-query($md) {
+    inline-size: 90%;
+  } // @include media-query($md)
+
+  &:not(li) {
+    margin-inline: auto;
+    margin-block-end: fluid($space-size,$space-size * 2);
+  } // &:not(li)
+
+  &:not(li):not(.wp-block-button) {
+    padding: var(--wp--preset--spacing--20);
+  } // &:not(li):not(.wp-block-button)
+
+  /*----------------------------------------
+    選択時
+  ------------------------------------------*/
+  >*.is-selected,
+  &.is-selected {
+    border-color: rgba($main-color,.3);
+
+    &::after {
+      border: 1px dashed rgba($main-color,.3);
+      outline: none !important;
+      border-radius: var(--editor-radius) !important;
+    } // &::after
+  }
+
+  &:not([contenteditable=true]):focus {
+    &::after {
+      display: none;
+    } // &::after
+  } // &:not([contenteditable=true]):focus
+  &:focus {
+    outline: none;
+    border-radius: var(--editor-radius);
+  } // &:focus
+
+  /*----------------------------------------
+    title
+  ------------------------------------------*/
+  &.wp-block-post-title {
+    font-size: calc($font-size + 30) + px;
+    font-weight: 700;
+    line-height: calc(($font-size + 40) / ($font-size + 30));
+  } // .wp-block-post-title
+
+  /*----------------------------------------
+    ブロック要素
+  ------------------------------------------*/
+  li {
+    padding-block-end: 0;
+
+    ul {
+      padding-block: 0;
+    } // ul
+  } // li
+
+  &.wp-block-button {
+    &:not(.has-custom-width) {
+      inline-size: auto;
+    } // &:not(.has-custom-width)
+  } // &.wp-block-button
+
+
+  /*----------------------------------------
+    align
+  ------------------------------------------*/
+  &[data-align] {
+    padding: 0;
+    block-size: auto;
+
+    &::after {
+      content: '';
+      clear: both;
+      display: block;
+    } // &::after
+
+    >* {
+      padding: var(--wp--preset--spacing--20);
+    } // >*
+
+    >a,
+    >figure {
+      margin-block-end: 0;
+
+      figcaption {
+        margin-block-end: 0;
+        display: block;
+      } // figcaption
+    } // >figure
+  } // &[data-align]
+} // .wp-block

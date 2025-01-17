@@ -1,0 +1,55 @@
+@use '../_includes/variables' as *;
+@use '../_includes/mixin' as *;
+
+/*-------------------------------------------------------------------------------
+  title
+--------------------------------------------------------------------------------*/
+.is-style-ttl__border {
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  align-items: stretch;
+  gap: 0 var(--wp--preset--spacing--20);
+
+  &::before {
+    content: '';
+    inline-size: 3px;
+    display: block;
+    background: $main-color;
+  } // &::before
+} // .is-style-ttl__border
+
+.is-style-ttl__beta {
+  padding: var(--wp--preset--spacing--20);
+  background: $main-color;
+  color: #FFF;
+} // .is-style-ttl__beta
+
+/*-------------------------------------------------------------------------------
+  gallery
+--------------------------------------------------------------------------------*/
+.is-style-gallery__uniform {
+  &.has-nested-images {
+    figure {
+      flex-grow: unset;
+    } // figure
+  } // &.has-nested-images
+
+  figure {
+    inline-size: calc(100%/3 - var(--wp--style--block-gap)*2/3);
+    block-size: auto;
+  } // figure
+
+  img {
+    inline-size: 100% !important;
+  } // img
+
+  figure,
+  img {
+    flex-grow: unset !important;
+    aspect-ratio: 4 / 3;
+  } // img
+
+  .components-drop-zone {
+    flex-grow: unset !important;
+  } // .components-drop-zone
+} // .is-style-gallery__uniform
