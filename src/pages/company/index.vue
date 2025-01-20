@@ -1,3 +1,7 @@
+<script>
+import '@/assets/scss/pages/company/index.scss';
+</script>
+
 <template>
   <div class="about">
     <h1>About Us</h1>

@@ -6,7 +6,7 @@ import axios from 'axios';
  * @returns {string}
  */
 const getApiBaseUrl = () => {
-  return import.meta.env.VITE_API_BASE_URL;;
+  return `${import.meta.env.VITE_BASE_URL}${import.meta.env.VITE_API_BASE_PATH}`;
 }
 
 /**

@@ -1,3 +1,13 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { getPages } from '../utils/api';
+
+const pagesData = ref([]);
+onMounted(async () => {
+  pagesData.value = await getPages();
+});
+</script>
+
 <template>
   <div class="home">
     <h1>Welcome to Our Website!</h1>
@@ -12,13 +22,3 @@
     <router-link to="/about">Learn more about us</router-link>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import { getPages } from '../utils/api';
-
-const pagesData = ref([]);
-onMounted(async () => {
-  pagesData.value = await getPages();
-});
-</script>

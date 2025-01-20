@@ -7,7 +7,7 @@
  */
 
 /**
- * ブロックエディタ用スタイル読み込み
+ * ブロックエディタ用 css 読み込み
  */
 function set_block_editor_styles(): void {
   add_editor_style('css/editor-style.css');
