@@ -1,6 +1,6 @@
 <script setup>
-import Breadcrumb from '../common/Breadcrumb.vue';
-import '@/assets/scss/components/layout/Header.scss';
+import Breadcrumb from "../common/Breadcrumb.vue";
+import "@/assets/scss/components/layout/Header.scss";
 </script>
 
 <template>

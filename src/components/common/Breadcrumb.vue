@@ -1,20 +1,20 @@
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import '@/assets/scss/components/common/Breadcrumb.scss'
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import "@/assets/scss/components/common/Breadcrumb.scss";
 
-const route = useRoute()
+const route = useRoute();
 
 const breadcrumbs = computed(() => {
-  const pathArray = route.path.split('/').filter(Boolean)
-  return [
-    { name: 'Home', path: '/' },
-    ...pathArray.map((segment, index) => ({
-      name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      path: '/' + pathArray.slice(0, index + 1).join('/')
-    }))
-  ]
-})
+	const pathArray = route.path.split("/").filter(Boolean);
+	return [
+		{ name: "Home", path: "/" },
+		...pathArray.map((segment, index) => ({
+			name: segment.charAt(0).toUpperCase() + segment.slice(1),
+			path: `/${pathArray.slice(0, index + 1).join("/")}`,
+		})),
+	];
+});
 </script>
 
 <template>

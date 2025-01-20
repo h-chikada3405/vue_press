@@ -1,3 +1,5 @@
-body {
+@use "../base" as *;
+
+.company {
   background-color: red;
-} // body
+}

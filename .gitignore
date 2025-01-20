@@ -26,4 +26,7 @@ dist-ssr
 
 # wp
 wp/plugins/*
+!wp/plugins/.gitkeep
+
 wp/uploads/*
+!wp/uploads/.gitkeep

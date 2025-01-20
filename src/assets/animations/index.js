@@ -4,5 +4,5 @@
  * @returns {void}
  */
 export const MountedAnimation = () => {
-  console.log("MountedAnimation");
+	console.log("MountedAnimation");
 };

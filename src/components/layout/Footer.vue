@@ -1,5 +1,5 @@
 <script>
-import '@/assets/scss/components/layout/Footer.scss';
+import "@/assets/scss/components/layout/Footer.scss";
 </script>
 
 <template>
