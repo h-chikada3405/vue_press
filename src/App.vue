@@ -10,11 +10,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="app">
-    <LayoutHeader />
-    <main>
-      <router-view />
-    </main>
-    <LayoutFooter />
-  </div>
+  <LayoutHeader />
+  <main>
+    <router-view />
+  </main>
+  <LayoutFooter />
 </template>

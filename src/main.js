@@ -1,7 +1,7 @@
 import generatedRoutes from "virtual:generated-pages";
 import { ViteSSG } from "vite-ssg";
 import App from "./App.vue";
-import * as apis from "./utils/api";
+import * as apis from "./utils/api.ts";
 import "./assets/scss/design.scss";
 
 const routes = generatedRoutes;
