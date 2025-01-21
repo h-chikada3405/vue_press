@@ -42,7 +42,7 @@ const cachedRequest = async <T>(
  * @param options.slug - スラッグ(省略可能)
  * @returns 固定ページのレスポンスデータ
  */
-export const getPages = async ({
+export const fetchPages = async ({
   pageId = null,
   slug = null,
 }: {
@@ -93,7 +93,7 @@ export const getPages = async ({
  * @param options.order - ソート順(デフォルトは降順)
  * @returns 投稿のデータ
  */
-export const getPosts = async ({
+export const fetchPosts = async ({
   postType = "posts",
   perPage = 10,
   page = 1,

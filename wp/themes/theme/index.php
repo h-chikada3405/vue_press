@@ -8,11 +8,6 @@
 ?>
 <?php get_header(); ?>
   <?php
-  echo '<pre>';
-  print_r( get_the_title() );
-  echo '</pre>';
-  ?>
-  <?php
     if (have_posts()):
       while (have_posts()): the_post();
   ?>

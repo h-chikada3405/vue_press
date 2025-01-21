@@ -1,12 +1,12 @@
 import { ref, Ref } from "vue";
 import getSlug from "./getSlug";
-import { getPages } from "../api";
+import { fetchPages } from "../api";
 
 const getId = (): Ref<number | null> => {
   const id = ref<number | null>(null);
   const slug = getSlug();
 
-  getPages({ slug: slug })
+  fetchPages({ slug: slug })
     .then((data) => {
       if (Array.isArray(data) && data.length > 0) {
         id.value = data[0].id;

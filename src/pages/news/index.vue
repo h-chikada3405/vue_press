@@ -1,14 +1,7 @@
 <script setup>
-import { getPosts } from "@/utils/api.ts";
-import { ref } from "vue";
-import getSlug from "@/utils/composables/getSlug";
+import { getPosts } from '@/utils';
 
-const newsData = ref([]);
-const getData = async () => {
-	newsData.value = await getPosts();
-};
-getData();
-console.log(getSlug());
+const newsData = getPosts();
 </script>
 
 <template>
