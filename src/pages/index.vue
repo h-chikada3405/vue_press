@@ -3,13 +3,12 @@
 </style>
 
 <script setup>
-import { getSlug, getTitle, getId } from "../utils";
+import { getSlug, getTitle, getId } from "@/utils";
 
 const id = getId();
 const slug = getSlug();
 const title = getTitle();
 </script>
-
 
 <template>
   <div class="home">

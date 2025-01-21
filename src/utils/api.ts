@@ -60,6 +60,8 @@ export const fetchPages = async ({
         url += `/${pageId}`;
       } else if (slug && slug !== 'index') {
         url += `?slug=${slug}`;
+      } else {
+        url += `?per_page=${params.per_page}`;
       }
 
       const response = await axios.get(url);

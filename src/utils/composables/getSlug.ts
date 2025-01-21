@@ -1,14 +1,17 @@
+import { ref, Ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 
-const getSlug = (): string => {
+const getSlug = (): Ref<string> => {
   const route = useRoute();
+  const slug = ref('');
 
-  if (typeof route.name === 'string') {
-    return route.name;
-  }
+  watchEffect(() => {
+    if (typeof route.name === 'string') {
+      slug.value = route.name;
+    }
+  });
 
-  return '';
+  return slug;
 };
-
 
 export default getSlug;

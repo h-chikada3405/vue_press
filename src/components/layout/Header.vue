@@ -1,7 +1,6 @@
-<script setup>
-import Breadcrumb from "../common/Breadcrumb.vue";
-import "@/assets/scss/components/layout/Header.scss";
-</script>
+<style lang="scss" scoped>
+@use '@/assets/scss/components/layout/Header.scss';
+</style>
 
 <template>
   <header>

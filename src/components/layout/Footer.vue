@@ -1,6 +1,7 @@
-<script>
-import "@/assets/scss/components/layout/Footer.scss";
-</script>
+<style lang="scss" scoped>
+@use '@/assets/scss/components/layout/Footer.scss';
+</style>
+
 
 <template>
   <footer>

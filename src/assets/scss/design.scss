@@ -1,6 +1,5 @@
 @use "./_includes/reset" as *;
-@use "./_includes/variables" as *;
-@use "./_includes/global" as *;
 @use '_wp/base' as *;
+@use "./_includes/global" as *;
 @use '_wp/blockeditor' as *;
 @use '_wp/style' as *;

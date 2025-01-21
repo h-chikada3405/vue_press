@@ -1,7 +1,10 @@
+<style lang="scss" scoped>
+@use '@/assets/scss/components/common/Breadcrumb.scss';
+</style>
+
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import "@/assets/scss/components/common/Breadcrumb.scss";
 
 const route = useRoute();
 
