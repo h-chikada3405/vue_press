@@ -2,12 +2,12 @@ import { type Ref, ref, watch } from "vue";
 import { fetchPages } from "../api";
 import getSlug from "./getSlug";
 
-const getTitle = (slug: string | null = null): Ref<string> => {
+const getTitle = (): Ref<string> => {
 	const title = ref("");
-	const currentSlug = slug ?? getSlug().value;
+	const slug = getSlug();
 
 	watch(
-		() => currentSlug,
+		() => slug.value,
 		(newSlug) => {
 			if (newSlug) {
 				fetchPages({ slug: newSlug })

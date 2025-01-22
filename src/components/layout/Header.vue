@@ -4,11 +4,12 @@
 
 <script setup>
 import { AnimateGlobalNav, InitGlobalNav } from "@/assets/animations/globalNav";
-import { isPage } from "@/utils/helpers";
 import { onMounted, ref } from "vue";
+import { useIsMobile, useIsPage } from "../../utils";
 import Breadcrumb from "../common/Breadcrumb.vue";
 
-const isHome = isPage("index");
+const isMobile = useIsMobile();
+const isHome = useIsPage("index");
 const isOpen = ref(false);
 
 const toggleNav = () => {
@@ -23,7 +24,7 @@ onMounted(() => {
 <template>
   <header>
     <!-- ハンバーガーメニューボタン -->
-    <button @click="toggleNav">
+    <button @click="toggleNav" v-if="isMobile">
       <span>=</span>
       <span>=</span>
       <span>=</span>

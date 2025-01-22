@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import { isMobile } from "../../utils";
 
 let tl = null;
 let globalNav = null;

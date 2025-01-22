@@ -1,3 +1,9 @@
+import { createMobileDetector, createPageDetector } from "./helpers";
+
+const { useIsPage, isPage } = createPageDetector();
+const { useIsMobile, isMobile } = createMobileDetector();
+
+export { useIsMobile, isMobile, useIsPage, isPage };
 export { default as getId } from "./composables/getId";
 export { default as getSlug } from "./composables/getSlug";
 export { default as getTitle } from "./composables/getTitle";

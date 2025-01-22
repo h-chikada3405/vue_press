@@ -1,6 +1,6 @@
 import { type Ref, ref } from "vue";
 import { fetchPosts } from "../api";
-import { WordPressPost } from "../types";
+import type { WordPressPost } from "../types";
 
 const getPosts = ({
 	postType = "posts",

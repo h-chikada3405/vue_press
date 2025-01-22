@@ -3,28 +3,44 @@
 </style>
 
 <script setup>
-import { getPages } from "@/utils";
+import { getPages, getPost } from "@/utils";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const pages = getPages();
+const post = getPost();
+
+/**
+ * パンくずリストに表示するページを取得
+ * @param {string} segment
+ * @param {number} index
+ * @param {string[]} pathArray
+ * @return {{ name: string, path: string } | null}
+ */
+const getBreadcrumb = (segment, index, pathArray) => {
+	const currentPath = `/${pathArray.slice(0, index + 1).join("/")}`;
+	const matchingPage = pages.value.find((page) => page.slug === segment);
+
+	if (matchingPage) {
+		return { name: matchingPage.title.rendered, path: currentPath };
+	}
+
+	if (post.value) {
+		return { name: post.value.title.rendered, path: currentPath };
+	}
+
+	return null;
+};
 
 const breadcrumbs = computed(() => {
 	const pathArray = route.path.split("/").filter(Boolean);
+
 	return [
 		{ name: "HOME", path: "/" },
-		...pathArray.map((segment, index) => {
-			const currentPath = `/${pathArray.slice(0, index + 1).join("/")}`;
-			const matchingPage = pages.value.find((page) => page.slug === segment);
-
-			return {
-				name: matchingPage
-					? matchingPage.title.rendered
-					: segment.charAt(0).toUpperCase() + segment.slice(1),
-				path: currentPath,
-			};
-		}),
+		...pathArray
+			.map((segment, index) => getBreadcrumb(segment, index, pathArray))
+			.filter(Boolean),
 	];
 });
 </script>
