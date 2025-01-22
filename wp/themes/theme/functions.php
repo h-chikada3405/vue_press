@@ -117,6 +117,7 @@ add_action('after_switch_theme', 'top_basic_switch_theme');
 /**
  * 外部ファイル読み込み
  */
-require get_parent_theme_file_path('/inc/admin_theme.php');	// 管理画面テーマ設定
-require get_parent_theme_file_path('/inc/custom_post.php');	// カスタム投稿設定
-require get_parent_theme_file_path('/inc/read_files.php');  // ファイル読み込み設定
+require get_parent_theme_file_path('/inc/admin_theme.php');	 // 管理画面テーマ設定
+require get_parent_theme_file_path('/inc/api_endpoint.php'); // REST API 設定
+require get_parent_theme_file_path('/inc/custom_post.php');	 // カスタム投稿設定
+require get_parent_theme_file_path('/inc/read_files.php');   // ファイル読み込み設定

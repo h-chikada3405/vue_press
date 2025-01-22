@@ -1,14 +1,14 @@
 /// <reference types="vite/client" />
 import axios from "axios";
-import { globalCache } from './cache';
-import { WordPressPage } from "./types";
+import { globalCache } from "./cache";
+import type { OptionsData, WordPressPage } from "./types";
 
 /**
  * API Base URL を取得
  * @returns APIのベースURL
  */
 const getApiBaseUrl = (): string => {
-  return `${import.meta.env.VITE_BASE_URL}${import.meta.env.VITE_API_BASE_PATH}`;
+	return `${import.meta.env.VITE_BASE_URL}${import.meta.env.VITE_API_BASE_PATH}`;
 };
 
 /**
@@ -19,20 +19,20 @@ const getApiBaseUrl = (): string => {
  * @returns レスポンスデータ
  */
 const cachedRequest = async <T>(
-  endpoint: string,
-  params: Record<string, unknown>,
-  fetchFunction: () => Promise<T>
+	endpoint: string,
+	params: Record<string, unknown>,
+	fetchFunction: () => Promise<T>,
 ): Promise<T> => {
-  const cacheKey = globalCache.generateKey(endpoint, params);
-  const cachedData = globalCache.get(cacheKey);
+	const cacheKey = globalCache.generateKey(endpoint, params);
+	const cachedData = globalCache.get(cacheKey);
 
-  if (cachedData) {
-    return cachedData as T;
-  }
+	if (cachedData) {
+		return cachedData as T;
+	}
 
-  const data = await fetchFunction();
-  globalCache.set(cacheKey, data);
-  return data;
+	const data = await fetchFunction();
+	globalCache.set(cacheKey, data);
+	return data;
 };
 
 /**
@@ -43,46 +43,46 @@ const cachedRequest = async <T>(
  * @returns 固定ページのレスポンスデータ
  */
 export const fetchPages = async ({
-  pageId = null,
-  slug = null,
+	pageId = null,
+	slug = null,
 }: {
-  pageId?: string | null;
-  slug?: string | null;
+	pageId?: number | null;
+	slug?: string | null;
 } = {}): Promise<WordPressPage | WordPressPage[]> => {
-  const endpoint = "pages";
-  const params = { pageId, slug, per_page: 100 };
+	const endpoint = "pages";
+	const params = { pageId, slug, per_page: 100 };
 
-  return cachedRequest(endpoint, params, async () => {
-    try {
-      let url = `${getApiBaseUrl()}/${endpoint}`;
+	return cachedRequest(endpoint, params, async () => {
+		try {
+			let url = `${getApiBaseUrl()}/${endpoint}`;
 
-      if (pageId) {
-        url += `/${pageId}`;
-      } else if (slug && slug !== 'index') {
-        url += `?slug=${slug}`;
-      } else {
-        url += `?per_page=${params.per_page}`;
-      }
+			if (pageId) {
+				url += `/${pageId}`;
+			} else if (slug && slug !== "index") {
+				url += `?slug=${slug}`;
+			} else {
+				url += `?per_page=${params.per_page}`;
+			}
 
-      const response = await axios.get(url);
-      const responseData = response.data
+			const response = await axios.get(url);
+			const responseData = response.data;
 
-      if (slug === 'index') {
-        const baseUrl = `${import.meta.env.VITE_BASE_URL}/`;
-        const filteredData = Array.isArray(responseData)
-          ? responseData.filter((page) => page.link === baseUrl)
-          : responseData.link === baseUrl
-          ? [responseData]
-          : [];
-        return filteredData.length > 0 ? filteredData[0] : {};
-      }
+			if (slug === "index") {
+				const baseUrl = `${import.meta.env.VITE_BASE_URL}/`;
+				const filteredData = Array.isArray(responseData)
+					? responseData.filter((page) => page.link === baseUrl)
+					: responseData.link === baseUrl
+						? [responseData]
+						: [];
+				return filteredData.length > 0 ? filteredData[0] : {};
+			}
 
-      return responseData;
-    } catch (error) {
-      console.error("Error fetching pages:", error);
-      return pageId || slug ? {} : [];
-    }
-  });
+			return responseData;
+		} catch (error) {
+			console.error("Error fetching pages:", error);
+			return pageId || slug ? {} : [];
+		}
+	});
 };
 
 /**
@@ -96,35 +96,51 @@ export const fetchPages = async ({
  * @returns 投稿のデータ
  */
 export const fetchPosts = async ({
-  postType = "posts",
-  perPage = 10,
-  page = 1,
-  orderby = "date",
-  order = "desc",
+	postType = "posts",
+	perPage = 10,
+	page = 1,
+	orderby = "date",
+	order = "desc",
 }: {
-  postType?: string;
-  perPage?: number;
-  page?: number;
-  orderby?: string;
-  order?: "asc" | "desc";
+	postType?: string;
+	perPage?: number;
+	page?: number;
+	orderby?: string;
+	order?: "asc" | "desc";
 } = {}): Promise<object | object[]> => {
-  const endpoint = postType;
-  const params = { perPage, page, orderby, order };
+	const endpoint = postType;
+	const params = { perPage, page, orderby, order };
 
-  return cachedRequest(endpoint, params, async () => {
-    try {
-      const response = await axios.get(`${getApiBaseUrl()}/${postType}`, {
-        params: {
-          per_page: perPage,
-          page,
-          orderby,
-          order,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching ${postType}:`, error);
-      return [];
-    }
-  });
+	return cachedRequest(endpoint, params, async () => {
+		try {
+			const response = await axios.get(`${getApiBaseUrl()}/${postType}`, {
+				params: {
+					per_page: perPage,
+					page,
+					orderby,
+					order,
+				},
+			});
+			return response.data;
+		} catch (error) {
+			console.error(`Error fetching ${postType}:`, error);
+			return [];
+		}
+	});
+};
+
+/**
+ * オプションページのデータ取得
+ * @returns オプションのデータ
+ */
+export const fetchOptions = async (): Promise<OptionsData> => {
+	return cachedRequest('options', {}, async () => {
+		try {
+			const response = await axios.get(`${getApiBaseUrl()}/options`);
+			return response.data || {};
+		} catch (error) {
+			console.error(`Error fetching options:`, error);
+			return {};
+		}
+	});
 };

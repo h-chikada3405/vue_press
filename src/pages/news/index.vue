@@ -1,5 +1,5 @@
 <script setup>
-import { getPosts } from '@/utils';
+import { getPosts } from "@/utils";
 
 const newsData = getPosts();
 </script>

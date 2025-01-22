@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, Ref, ref, computed, watch, watchEffect } from "vue";
+import { type Ref, onMounted, onUnmounted, ref, watch } from "vue";
 import getSlug from "./composables/getSlug";
 
 /**
@@ -9,21 +9,21 @@ import getSlug from "./composables/getSlug";
  * isPage('index', 'contact')
  */
 const isPage = (pageNames: string[] | string): Ref<boolean> => {
-  const result = ref(false);
-  const slug = getSlug();
-  const namesArray = Array.isArray(pageNames) ? pageNames : [pageNames];
+	const result = ref(false);
+	const slug = getSlug();
+	const namesArray = Array.isArray(pageNames) ? pageNames : [pageNames];
 
-  watch(
-    () => slug.value,
-    (newSlug) => {
-      if (newSlug) {
-        result.value = namesArray.includes(newSlug);
-      }
-    },
-    { immediate: true }
-  );
+	watch(
+		() => slug.value,
+		(newSlug) => {
+			if (newSlug) {
+				result.value = namesArray.includes(newSlug);
+			}
+		},
+		{ immediate: true },
+	);
 
-  return result;
+	return result;
 };
 
 /**
@@ -31,27 +31,28 @@ const isPage = (pageNames: string[] | string): Ref<boolean> => {
  * @returns {Ref<boolean>} モバイルデバイスなら true, それ以外は false
  */
 const isMobile = (): Ref<boolean> => {
-  const isMobile = ref(false);
+	const isMobile = ref(false);
 
-  const updateIsMobile = (): void => {
-    const windowWidth = window.innerWidth;
-    const breakpoint = 768;
-    const isMobileUserAgent = /iphone|ipod|android.*mobile|windows.*phone|blackberry.*mobile/.test(
-      navigator.userAgent.toLowerCase()
-    );
+	const updateIsMobile = (): void => {
+		const windowWidth = window.innerWidth;
+		const breakpoint = 768;
+		const isMobileUserAgent =
+			/iphone|ipod|android.*mobile|windows.*phone|blackberry.*mobile/.test(
+				navigator.userAgent.toLowerCase(),
+			);
 
-    isMobile.value = windowWidth <= breakpoint || isMobileUserAgent;
-  };
-  updateIsMobile();
+		isMobile.value = windowWidth <= breakpoint || isMobileUserAgent;
+	};
+	updateIsMobile();
 
-  onMounted(() => {
-    window.addEventListener('resize', updateIsMobile);
-  });
+	onMounted(() => {
+		window.addEventListener("resize", updateIsMobile);
+	});
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateIsMobile);
-  });
-  return isMobile;
+	onUnmounted(() => {
+		window.removeEventListener("resize", updateIsMobile);
+	});
+	return isMobile;
 };
 
-export { isPage, isMobile }
+export { isPage, isMobile };

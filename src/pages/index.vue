@@ -3,7 +3,7 @@
 </style>
 
 <script setup>
-import { getSlug, getTitle, getId } from "@/utils";
+import { getId, getSlug, getTitle } from "@/utils";
 
 const id = getId();
 const slug = getSlug();
