@@ -1,5 +1,6 @@
 import { type Ref, ref } from "vue";
 import { fetchPosts } from "../api";
+import { WordPressPost } from "../types";
 
 const getPosts = ({
 	postType = "posts",
@@ -13,8 +14,8 @@ const getPosts = ({
 	page?: number;
 	orderby?: string;
 	order?: "asc" | "desc";
-} = {}): Ref<object | object[]> => {
-	const posts = ref<object | object[]>([]);
+} = {}): Ref<WordPressPost | WordPressPost[]> => {
+	const posts = ref<WordPressPost | WordPressPost[]>([]);
 
 	fetchPosts({ postType, perPage, page, orderby, order })
 		.then((data) => {

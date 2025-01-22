@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import axios from "axios";
 import { globalCache } from "./cache";
-import type { OptionsData, WordPressPage } from "./types";
+import type { OptionsData, WordPressPage, WordPressPost } from "./types";
 
 /**
  * API Base URL を取得
@@ -89,6 +89,7 @@ export const fetchPages = async ({
  * 投稿データの取得
  * @param options - オプションオブジェクト
  * @param options.postType - 投稿タイプ(省略可能)
+ * @param options.postId - 投稿ID(省略可能)
  * @param options.perPage - 1回のリクエストで取得する件数(デフォルトは10)
  * @param options.page - 取得するページ番号(デフォルトは1)
  * @param options.orderby - ソート基準(デフォルトは日付)
@@ -97,34 +98,33 @@ export const fetchPages = async ({
  */
 export const fetchPosts = async ({
 	postType = "posts",
+	postId,
 	perPage = 10,
 	page = 1,
 	orderby = "date",
 	order = "desc",
 }: {
 	postType?: string;
+	postId?: number;
 	perPage?: number;
 	page?: number;
 	orderby?: string;
 	order?: "asc" | "desc";
-} = {}): Promise<object | object[]> => {
-	const endpoint = postType;
+} = {}): Promise<WordPressPost | WordPressPost[]> => {
+	const endpoint = postId ? `${postType}/${postId}` : postType;
 	const params = { perPage, page, orderby, order };
 
 	return cachedRequest(endpoint, params, async () => {
 		try {
-			const response = await axios.get(`${getApiBaseUrl()}/${postType}`, {
-				params: {
-					per_page: perPage,
-					page,
-					orderby,
-					order,
-				},
+			const response = await axios.get(`${getApiBaseUrl()}/${endpoint}`, {
+				params: postId
+					? undefined
+					: { per_page: perPage, page, orderby, order },
 			});
 			return response.data;
 		} catch (error) {
 			console.error(`Error fetching ${postType}:`, error);
-			return [];
+			return postId ? {} : [];
 		}
 	});
 };
@@ -134,12 +134,12 @@ export const fetchPosts = async ({
  * @returns オプションのデータ
  */
 export const fetchOptions = async (): Promise<OptionsData> => {
-	return cachedRequest('options', {}, async () => {
+	return cachedRequest("options", {}, async () => {
 		try {
 			const response = await axios.get(`${getApiBaseUrl()}/options`);
 			return response.data || {};
 		} catch (error) {
-			console.error(`Error fetching options:`, error);
+			console.error("Error fetching options:", error);
 			return {};
 		}
 	});

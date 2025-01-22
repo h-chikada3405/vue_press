@@ -4,10 +4,13 @@
 
 <script setup>
 import { AnimateGlobalNav, InitGlobalNav } from "@/assets/animations/globalNav";
+import { isPage } from "@/utils/helpers";
 import { onMounted, ref } from "vue";
 import Breadcrumb from "../common/Breadcrumb.vue";
 
+const isHome = isPage("index");
 const isOpen = ref(false);
+
 const toggleNav = () => {
 	isOpen.value = !isOpen.value;
 	AnimateGlobalNav(isOpen.value);
@@ -19,7 +22,6 @@ onMounted(() => {
 
 <template>
   <header>
-
     <!-- ハンバーガーメニューボタン -->
     <button @click="toggleNav">
       <span>=</span>
@@ -31,9 +33,12 @@ onMounted(() => {
     <nav class="global-nav">
       <router-link to="/">Home</router-link>
       <router-link to="/company">Company</router-link>
+      <router-link to="/company/greeting">Greeting</router-link>
       <router-link to="/news">News</router-link>
     </nav>
 
-    <Breadcrumb />
+    <template v-if="!isHome">
+      <Breadcrumb />
+    </template>
   </header>
 </template>

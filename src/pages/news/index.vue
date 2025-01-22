@@ -6,9 +6,10 @@ const newsData = getPosts();
 
 <template>
   <div class="news wp-post_content">
-    <div v-for="news in newsData" :key="news.id">
-      <h2>{{ news.title.rendered }}</h2>
-      <div v-html="news.content.rendered"></div>
-    </div>
+    <template v-for="news in newsData" :key="news.id">
+      <router-link :to="`/news/${news.id}`">
+        <h2>{{ news.title.rendered }}</h2>
+      </router-link>
+    </template>
   </div>
 </template>

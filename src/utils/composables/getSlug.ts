@@ -14,7 +14,12 @@ const getSlug = (): Ref<string> => {
 		} else if (pathSegments.length === 1) {
 			slug.value = pathSegments[0];
 		} else {
-			slug.value = pathSegments.slice(1).join("/");
+			const lastSegment = pathSegments[pathSegments.length - 1];
+			if (/^\d+$/.test(lastSegment)) {
+				slug.value = pathSegments[pathSegments.length - 2] || "";
+			} else {
+				slug.value = pathSegments.slice(1).join("/");
+			}
 		}
 	});
 
