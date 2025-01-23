@@ -1,5 +1,4 @@
 import { gsap } from "gsap";
-import { isMobile } from "../../utils";
 
 let tl = null;
 let globalNav = null;
@@ -27,8 +26,6 @@ export const InitGlobalNav = () => {
 			autoAlpha: 1,
 			duration: 0.3,
 			ease: "power3.out",
-			onComplete: () => console.log("Animation complete"),
-			onReverseComplete: () => console.log("Animation reversed"),
 		});
 	}
 };

@@ -25,6 +25,7 @@
     "@wordpress/env": "^10.15.0",
     "sass": "^1.83.4",
     "vite": "^6.0.5",
+    "vite-plugin-env-compatible": "^2.0.1",
     "vite-plugin-pages": "^0.32.4"
   }
 }

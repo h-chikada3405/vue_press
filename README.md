@@ -33,3 +33,13 @@ npm run dev
 ```bash
 npm install -g @wordpress/env
 ```
+
+## ユーティリティ関数
+
+| 関数名 | 引数 | 説明 |
+| --- | --- | --- |
+| `getSlug` | - | 現在表示しているページのスラッグを取得。 |
+| `getId` | - | 現在表示しているページのIDを取得。 |
+| `getTitle` | - | 現在表示しているページのタイトルを取得。 |
+| `getPages`| `{ pageId: , slug:  }` | 固定ページをすべて取得。<br>`pageId` または `slug` を指定すると、指定したページを取得。 |
+| `getPosts`| `{ postType: , perPage: , page: , orderby: , order:  }` | 投稿をすべて取得。 |
