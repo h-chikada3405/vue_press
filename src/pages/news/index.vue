@@ -5,7 +5,7 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const perPage = 1;
+const perPage = 2;
 const currentPage = ref(Number(route.query.page) || 1);
 const totalPostCount = getTotalPostCount();
 const totalPages = ref(null);

@@ -71,6 +71,55 @@ function get_post_type_by_id($request): array {
 }
 
 /**
+ * 隣接する投稿のエンドポイントを作成
+ * @return array
+ */
+function register_adjacent_posts_endpoint(): void {
+  register_rest_route('wp/v2', '/adjacent-posts/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_adjacent_posts',
+  ));
+}
+add_action('rest_api_init', 'register_adjacent_posts_endpoint');
+
+/**
+ * 隣接する投稿を取得
+ * @return array
+ */
+function get_adjacent_posts($request): array {
+  $post_id = $request['id'];
+  $post = get_post($post_id);
+
+  if (!$post) {
+    return new WP_Error('no_post', 'Post not found', ['status' => 404]);
+  }
+
+  global $post;
+  $post = get_post($post_id);
+  setup_postdata($post);
+
+  $prev_post = get_previous_post();
+  $next_post = get_next_post();
+
+  wp_reset_postdata();
+
+  $response = array(
+    'prev' => $prev_post ? array(
+      'id' => $prev_post->ID,
+      'title' => $prev_post->post_title,
+      'slug' => $prev_post->post_name,
+    ) : null,
+    'next' => $next_post ? array(
+      'id' => $next_post->ID,
+      'title' => $next_post->post_title,
+      'slug' => $next_post->post_name,
+    ) : null,
+  );
+
+  return $response;
+}
+
+/**
  * option ページのエンドポイントを作成
  * @return void
  */

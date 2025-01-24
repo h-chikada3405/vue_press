@@ -94,7 +94,7 @@ const getPaginationPages = () => {
       :disabled="currentPage === 1"
       @click="handlePrevClick"
     >
-      <i v-if="typeof prev === 'object'"><component :is="prev" :fill="'#000'" /></i>
+      <i v-if="typeof prev === 'object'"><component :is="prev" :fill="'#222222'" /></i>
       <span v-else>{{ prev }}</span>
     </button>
     <ul>
@@ -121,7 +121,7 @@ const getPaginationPages = () => {
       :disabled="currentPage === totalPages"
       @click="handleNextClick"
     >
-      <i v-if="typeof next === 'object'"><component :is="next" :fill="'#000'" /></i>
+      <i v-if="typeof next === 'object'"><component :is="next" :fill="'#222222'" /></i>
       <span v-else>{{ next }}</span>
     </button>
   </div>

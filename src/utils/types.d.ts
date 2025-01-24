@@ -82,6 +82,19 @@ export interface PostType {
 	post_type: string;
 }
 
+export interface AdjacentPost {
+	prev: {
+		id: number;
+		title: string;
+		slug: string;
+	} | null;
+	next: {
+		id: number;
+		title: string;
+		slug: string;
+	} | null;
+}
+
 export interface OptionsData {
 	[key: string]: string;
 }

@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import axios from "axios";
 import { globalCache } from "./cache";
-import type { OptionsData, PostType, WordPressPage, WordPressPost } from "./types";
+import type { AdjacentPost, OptionsData, PostType, WordPressPage, WordPressPost } from "./types";
 
 /**
  * API Base URL を取得
@@ -173,6 +173,29 @@ export const fetchPostType = async (postId: number): Promise<PostType> => {
 		} catch (error) {
 			console.error(`Error fetching post type:`, error);
 			return postId ? {} : [];
+		}
+	});
+};
+
+/**
+ * 隣接する投稿データの取得
+ * @param postId - 投稿ID
+ * @returns 隣接する投稿のデータ
+ */
+export const fetchAdjacentPosts = async (postId: number): Promise<AdjacentPost | null> => {
+	if (!postId) {
+		throw new Error("postId is required");
+	}
+
+	const endpoint = `adjacent-posts/${postId}`;
+
+	return cachedRequest(endpoint, {}, async () => {
+		try {
+			const response = await axios.get(`${getApiBaseUrl()}/${endpoint}`);
+			return response.data;
+		} catch (error) {
+			console.error(`Error fetching ${endpoint}:`, error);
+			return null;
 		}
 	});
 };

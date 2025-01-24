@@ -34,9 +34,7 @@ const getPost = ({
 			if (newPostId !== null && newPostId !== undefined) {
 				const currentPostType = postType
             ? ref({ post_type: postType })
-            : getPostType(newPostId);
-						console.log(currentPostType);
-
+            : getPostType(newPostId, route.params);
 				watch(currentPostType, (newPostType) => {
 					if (newPostType) {
 						fetchPosts({ postType: newPostType.post_type, postId: newPostId })
@@ -54,7 +52,7 @@ const getPost = ({
 		{ immediate: true },
 	);
 
-	return post;
+		return post;
 };
 
 export default getPost;

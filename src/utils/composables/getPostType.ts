@@ -1,25 +1,25 @@
 import { ref, Ref, watch } from "vue";
-import { useRoute } from "vue-router";
 import { fetchPostType } from "../api";
 import { PostType } from "../types";
 
-const getPostType = (postId?: number | null): Ref<PostType | null> => {
-  const route = useRoute();
+const getPostType = (postId?: number | null, routeParams?: any): Ref<PostType | null> => {
   const currentPostId = ref(postId || null);
   const postType = ref<PostType | null>(null);
 
-  watch(
-    () => route?.params.id,
-    (newId) => {
-      if (newId) {
-        const numericId = Number(newId);
-        if (!Number.isNaN(numericId)) {
-          currentPostId.value = numericId;
+  if (routeParams) {
+    watch(
+      () => routeParams.id,
+      (newId) => {
+        if (newId) {
+          const numericId = Number(newId);
+          if (!Number.isNaN(numericId)) {
+            currentPostId.value = numericId;
+          }
         }
-      }
-    },
-    { immediate: true }
-  );
+      },
+      { immediate: true }
+    );
+  }
 
   watch(
     currentPostId,
