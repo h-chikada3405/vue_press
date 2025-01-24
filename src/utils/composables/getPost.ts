@@ -2,9 +2,10 @@ import { type Ref, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { fetchPosts } from "../api";
 import type { WordPressPost } from "../types";
+import getPostType from "./getPostType";
 
 const getPost = ({
-	postType = "posts",
+	postType,
 	postId,
 }: {
 	postType?: string;
@@ -15,7 +16,7 @@ const getPost = ({
 	const post = ref<WordPressPost | null>(null);
 
 	watch(
-		() => route.params.id,
+		() => route?.params.id,
 		(newId) => {
 			if (newId) {
 				const numericId = Number(newId);
@@ -31,14 +32,23 @@ const getPost = ({
 		currentPostId,
 		(newPostId) => {
 			if (newPostId !== null && newPostId !== undefined) {
-				fetchPosts({ postType, postId: newPostId })
-					.then((data) => {
-						post.value = Array.isArray(data) ? data[0] : data;
-					})
-					.catch((error) => {
-						console.error("Failed to fetch post:", error);
-						post.value = null;
-					});
+				const currentPostType = postType
+            ? ref({ post_type: postType })
+            : getPostType(newPostId);
+						console.log(currentPostType);
+
+				watch(currentPostType, (newPostType) => {
+					if (newPostType) {
+						fetchPosts({ postType: newPostType.post_type, postId: newPostId })
+							.then((data) => {
+								post.value = Array.isArray(data) ? data[0] : data;
+							})
+							.catch((error) => {
+								console.error("Failed to fetch post:", error);
+								post.value = null;
+							});
+					}
+				});
 			}
 		},
 		{ immediate: true },

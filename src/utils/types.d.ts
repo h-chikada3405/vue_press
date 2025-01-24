@@ -78,6 +78,10 @@ export interface WordPressPost {
 	type: string;
 }
 
+export interface PostType {
+	post_type: string;
+}
+
 export interface OptionsData {
 	[key: string]: string;
 }

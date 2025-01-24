@@ -26,9 +26,6 @@ function get_global_styles(): WP_REST_Response {
   ob_start();
   wp_head();
   $head_content = ob_get_clean();
-  echo '<pre>';
-  print_r( $head_content );
-  echo '</pre>';
   preg_match('/<style id=\'global-styles-inline-css\' type=\'text\/css\'>(.*?)<\/style>/s', $head_content, $matches);
 
   if (isset($matches[1])) {
@@ -37,6 +34,40 @@ function get_global_styles(): WP_REST_Response {
   } else {
     return new WP_REST_Response('Global styles not found', 404);
   }
+}
+
+/**
+ * post-type のエンドポイントを作成
+ * @return void
+ */
+function register_post_type_endpoint(): void {
+  register_rest_route('wp/v2', '/post-type/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_post_type_by_id',
+    'permission_callback' => '__return_true'
+  ));
+}
+add_action('rest_api_init', 'register_post_type_endpoint');
+
+/**
+ * post-type を取得
+ * @return array
+ */
+function get_post_type_by_id($request): array {
+  $post_id = $request['id'];
+  $post = get_post($post_id);
+
+  if (!$post) {
+    return new WP_Error(
+      'no_post',
+      'Post not found',
+      ['status' => 404]
+    );
+  }
+
+  return array(
+    'post_type' => $post->post_type,
+  );
 }
 
 /**

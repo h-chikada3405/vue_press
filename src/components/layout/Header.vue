@@ -34,6 +34,7 @@ onMounted(() => {
       <router-link to="/">Home</router-link>
       <router-link to="/company">Company</router-link>
       <router-link to="/company/greeting">Greeting</router-link>
+      <router-link to="/company/office">Office</router-link>
       <router-link to="/news">News</router-link>
     </nav>
 

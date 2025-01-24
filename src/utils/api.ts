@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import axios from "axios";
 import { globalCache } from "./cache";
-import type { OptionsData, WordPressPage, WordPressPost } from "./types";
+import type { OptionsData, PostType, WordPressPage, WordPressPost } from "./types";
 
 /**
  * API Base URL を取得
@@ -111,7 +111,8 @@ export const fetchPosts = async ({
 	orderby?: string;
 	order?: "asc" | "desc";
 } = {}): Promise<WordPressPost | WordPressPost[]> => {
-	const endpoint = postId ? `${postType}/${postId}` : postType;
+	const adjustedPostType = postType === "post" ? "posts" : postType;
+	const endpoint = postId ? `${adjustedPostType}/${postId}` : adjustedPostType;
 	const params = { perPage, page, orderby, order };
 
 	return cachedRequest(endpoint, params, async () => {
@@ -123,7 +124,54 @@ export const fetchPosts = async ({
 			});
 			return response.data;
 		} catch (error) {
-			console.error(`Error fetching ${postType}:`, error);
+			console.error(`Error fetching ${adjustedPostType}:`, error);
+			return postId ? {} : [];
+		}
+	});
+};
+
+/**
+ * 投稿総数の取得
+ * @param options - オプションオブジェクト
+ * @param options.postType - 投稿タイプ(省略可能)
+ * @returns 投稿のデータ
+ */
+export const fetchTotalPostCount = async ({
+	postType = "posts",
+}: {
+	postType?: string;
+} = {}): Promise<number | null> => {
+	const adjustedPostType = postType === "post" ? "posts" : postType;
+
+	return cachedRequest(adjustedPostType, {}, async () => {
+		try {
+			const response = await axios.get(`${getApiBaseUrl()}/${adjustedPostType}`);
+			return response.headers["x-wp-total"];
+		} catch (error) {
+			console.error(`Error fetching ${adjustedPostType}:`, error);
+			return null;
+		}
+	});
+};
+
+/**
+ * 投稿タイプデータの取得
+ * @param postId - 投稿ID
+ * @returns 投稿タイプのデータ
+ */
+export const fetchPostType = async (postId: number): Promise<PostType> => {
+	if (!postId) {
+		throw new Error("postId is required");
+	}
+
+	const endpoint = `post-type/${postId}`;
+
+	return cachedRequest(endpoint, {}, async () => {
+		try {
+			const response = await axios.get(`${getApiBaseUrl()}/${endpoint}`);
+			return response.data;
+		} catch (error) {
+			console.error(`Error fetching post type:`, error);
 			return postId ? {} : [];
 		}
 	});

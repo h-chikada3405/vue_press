@@ -22,11 +22,11 @@ const getBreadcrumb = (segment, index, pathArray) => {
 	const currentPath = `/${pathArray.slice(0, index + 1).join("/")}`;
 	const matchingPage = pages.value.find((page) => page.slug === segment);
 
-	if (matchingPage) {
+	if (matchingPage && matchingPage.title && matchingPage.title.rendered) {
 		return { name: matchingPage.title.rendered, path: currentPath };
 	}
 
-	if (post.value) {
+	if (post.value && post.value.title && post.value.title.rendered) {
 		return { name: post.value.title.rendered, path: currentPath };
 	}
 

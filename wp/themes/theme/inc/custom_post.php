@@ -7,17 +7,17 @@
  */
 function custom_post_type() {
   $args = array(
-    'label'           => '「カスタム投稿名」',
+    'label'           => '営業所案内',
     'labels'          => array(
-                            'name'                => '「カスタム投稿名」',
-                            'singular_name'       => '「カスタム投稿名」一覧',
-                            'add_new_item'        => '「カスタム投稿名」を追加',
+                            'name'                => '営業所案内',
+                            'singular_name'       => '営業所案内一覧',
+                            'add_new_item'        => '営業所案内を追加',
                             'add_new'             => '新規追加',
-                            'new_item'            => '新しい「カスタム投稿名」',
-                            'view_item'           => '「カスタム投稿名」を表示',
-                            'not_found'           => '「カスタム投稿名」は見つかりませんでした',
-                            'not_found_in_trash'  => 'ゴミ箱に「カスタム投稿名」はありません。',
-                            'search_items'        => '「カスタム投稿名」を検索',
+                            'new_item'            => '新しい営業所案内',
+                            'view_item'           => '営業所案内を表示',
+                            'not_found'           => '営業所案内は見つかりませんでした',
+                            'not_found_in_trash'  => 'ゴミ箱に営業所案内はありません。',
+                            'search_items'        => '営業所案内を検索',
                           ),
     'description'     => '',
     'public'          => true,
@@ -29,18 +29,8 @@ function custom_post_type() {
     'supports'        => array('title', 'editor', 'thumbnail'),
     'has_archive'     => true,
     'show_in_rest'    => true,
+    'rewrite'         => array('slug' => 'company/office'),
   );
-  register_post_type('custom', $args);
-
-  register_taxonomy(
-    'custom_tax',
-    array('custom'),
-    array(
-      'hierarchical'      => true,
-      'label'             => '「カスタムタクソノミー名」',
-      'show_ui'           => true,
-      'show_admin_column' => true,
-    )
-  );
+  register_post_type('office', $args);
 }
 add_action('init', 'custom_post_type');

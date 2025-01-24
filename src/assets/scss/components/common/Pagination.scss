@@ -1,0 +1,26 @@
+@use '../../_includes' as *;
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-inline: auto;
+
+  > button {
+    color: $main-color;
+
+    &.is-disabled {
+      color: $font-color;
+    } // &.is-disabled
+
+    > i {
+      width: 8px;
+      display: block;
+    } // > i
+  } // > button
+
+  > ul {
+    display: flex;
+    gap: 20px;
+  } // > ul
+} // .pagination

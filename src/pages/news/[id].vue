@@ -5,7 +5,7 @@ const news = getPost();
 </script>
 
 <template>
-  <div>
+  <div class="news wp-post_content">
     <h1>{{ news?.title.rendered }}</h1>
     <div v-html="news?.content.rendered"></div>
   </div>
