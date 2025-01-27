@@ -3,86 +3,84 @@
 </style>
 
 <script setup>
-import { defineProps, markRaw } from 'vue'
-import { useRouter } from 'vue-router';
-import ArrowBackIOS from '../svg/ArrowBackIOS.vue';
-import ArrowForwardIOS from '../svg/ArrowForwardIOS.vue';
+import { markRaw } from "vue";
+import { useRouter } from "vue-router";
+import ArrowBackIOS from "../svg/ArrowBackIOS.vue";
+import ArrowForwardIOS from "../svg/ArrowForwardIOS.vue";
 
 const props = defineProps({
-  currentPage: {
-    default: 1
-  },
-  totalPages: {
-    required: true
-  },
-  range: {
-    default: 2
-  },
-  prev: {
-    default: () => markRaw(ArrowBackIOS)
-  },
-  next: {
-    default: () => markRaw(ArrowForwardIOS)
-  },
-  dots: {
-    default: '...'
-  },
+	currentPage: {
+		default: 1,
+	},
+	totalPages: {
+		required: true,
+	},
+	range: {
+		default: 2,
+	},
+	prev: {
+		default: () => markRaw(ArrowBackIOS),
+	},
+	next: {
+		default: () => markRaw(ArrowForwardIOS),
+	},
+	dots: {
+		default: "...",
+	},
 });
 
 const router = useRouter();
 
 const handlePrevClick = () => {
-  if (props.currentPage > 1) {
-    const newPage = props.currentPage - 1;
-    router.push({ query: { page: newPage } });
-  }
-}
+	if (props.currentPage > 1) {
+		const newPage = props.currentPage - 1;
+		router.push({ query: { page: newPage } });
+	}
+};
 
 const handleNextClick = () => {
-  if (props.currentPage < props.totalPages) {
-    const newPage = props.currentPage + 1;
-    router.push({ query: { page: newPage } });
-  }
-}
+	if (props.currentPage < props.totalPages) {
+		const newPage = props.currentPage + 1;
+		router.push({ query: { page: newPage } });
+	}
+};
 
 const getPaginationPages = () => {
-  const { currentPage, totalPages, range, dots } = props;
-  const pageNumbers = [];
-  const visiblePages = range * 2 + 1;
+	const { currentPage, totalPages, range, dots } = props;
+	const pageNumbers = [];
+	const visiblePages = range * 2 + 1;
 
-  if (totalPages <= visiblePages) {
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
-  } else {
-    if (currentPage <= range + 1) {
-      for (let i = 1; i <= visiblePages; i++) {
-        pageNumbers.push(i);
-      }
-      if (totalPages > visiblePages) {
-        pageNumbers.push(dots);
-        pageNumbers.push(totalPages);
-      }
-    }
-    else if (currentPage >= totalPages - range) {
-      pageNumbers.push(1);
-      pageNumbers.push(dots);
-      for (let i = totalPages - visiblePages + 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    }
-    else {
-      pageNumbers.push(1);
-      pageNumbers.push(dots);
-      for (let i = currentPage - range; i <= currentPage + range; i++) {
-        pageNumbers.push(i);
-      }
-      pageNumbers.push(dots);
-      pageNumbers.push(totalPages);
-    }
-  }
+	if (totalPages <= visiblePages) {
+		for (let i = 1; i <= totalPages; i++) {
+			pageNumbers.push(i);
+		}
+	} else {
+		if (currentPage <= range + 1) {
+			for (let i = 1; i <= visiblePages; i++) {
+				pageNumbers.push(i);
+			}
+			if (totalPages > visiblePages) {
+				pageNumbers.push(dots);
+				pageNumbers.push(totalPages);
+			}
+		} else if (currentPage >= totalPages - range) {
+			pageNumbers.push(1);
+			pageNumbers.push(dots);
+			for (let i = totalPages - visiblePages + 1; i <= totalPages; i++) {
+				pageNumbers.push(i);
+			}
+		} else {
+			pageNumbers.push(1);
+			pageNumbers.push(dots);
+			for (let i = currentPage - range; i <= currentPage + range; i++) {
+				pageNumbers.push(i);
+			}
+			pageNumbers.push(dots);
+			pageNumbers.push(totalPages);
+		}
+	}
 
-  return pageNumbers;
+	return pageNumbers;
 };
 </script>
 

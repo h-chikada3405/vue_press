@@ -3,13 +3,14 @@
 </style>
 
 <script setup>
-import { getPages, getPost } from "@/utils";
+import { getCategories, getPages, getPost } from "@/utils";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const pages = getPages();
 const post = getPost();
+const categories = getCategories();
 
 /**
  * パンくずリストに表示するページを取得
@@ -22,12 +23,37 @@ const getBreadcrumb = (segment, index, pathArray) => {
 	const currentPath = `/${pathArray.slice(0, index + 1).join("/")}`;
 	const matchingPage = pages.value.find((page) => page.slug === segment);
 
-	if (matchingPage && matchingPage.title && matchingPage.title.rendered) {
+	if (matchingPage?.title?.rendered) {
 		return { name: matchingPage.title.rendered, path: currentPath };
 	}
 
-	if (post.value && post.value.title && post.value.title.rendered) {
-		return { name: post.value.title.rendered, path: currentPath };
+	if (pathArray.includes("category") && categories.value) {
+		const matchingCategory = categories.value.find(
+			(category) => category.slug === segment,
+		);
+		if (matchingCategory) {
+			return { name: matchingCategory.name, path: currentPath };
+		}
+	}
+
+	if (post.value?.title?.rendered) {
+		const breadcrumbs = [];
+
+		if (categories.value) {
+			const matchingCategory = categories.value.find(
+				(category) => category.id === post.value.categories[0],
+			);
+			if (matchingCategory) {
+				breadcrumbs.push({
+					name: matchingCategory.name,
+					path: `/${pathArray.slice(0, index).join("/")}/category/${matchingCategory.slug}`,
+				});
+			}
+		}
+
+		breadcrumbs.push({ name: post.value.title.rendered, path: currentPath });
+
+		return breadcrumbs;
 	}
 
 	return null;
@@ -40,7 +66,8 @@ const breadcrumbs = computed(() => {
 		{ name: "HOME", path: "/" },
 		...pathArray
 			.map((segment, index) => getBreadcrumb(segment, index, pathArray))
-			.filter(Boolean),
+			.filter(Boolean)
+			.flat(),
 	];
 });
 </script>

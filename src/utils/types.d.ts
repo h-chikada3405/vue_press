@@ -82,6 +82,21 @@ export interface PostType {
 	post_type: string;
 }
 
+export interface Category {
+	id: number;
+	count: number;
+	description: string;
+	link: string;
+	name: string;
+	slug: string;
+	taxonomy: string;
+	parent: number;
+	meta: {
+		footnotes: string;
+	};
+	acf: AcfFields;
+}
+
 export interface AdjacentPost {
 	prev: {
 		id: number;

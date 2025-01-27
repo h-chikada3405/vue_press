@@ -3,23 +3,23 @@
 </style>
 
 <script setup>
-import { defineProps, markRaw } from 'vue'
-import { getPrevPost, getNextPost } from '@/utils';
-import ArrowBackIOS from '../svg/ArrowBackIOS.vue';
-import ArrowForwardIOS from '../svg/ArrowForwardIOS.vue';
-import { getSlug } from '../../utils';
+import { getNextPost, getPrevPost } from "@/utils";
+import { markRaw } from "vue";
+import { getSlug } from "../../utils";
+import ArrowBackIOS from "../svg/ArrowBackIOS.vue";
+import ArrowForwardIOS from "../svg/ArrowForwardIOS.vue";
 
 const props = defineProps({
-  archive: {
-    default: '一覧へ',
-  },
-  prev: {
-    default: () => markRaw(ArrowBackIOS)
-  },
-  next: {
-    default: () => markRaw(ArrowForwardIOS)
-  }
-})
+	archive: {
+		default: "一覧へ",
+	},
+	prev: {
+		default: () => markRaw(ArrowBackIOS),
+	},
+	next: {
+		default: () => markRaw(ArrowForwardIOS),
+	},
+});
 
 const slug = getSlug();
 const prevPost = getPrevPost();

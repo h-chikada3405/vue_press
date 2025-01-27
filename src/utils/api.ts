@@ -1,7 +1,14 @@
 /// <reference types="vite/client" />
 import axios from "axios";
 import { globalCache } from "./cache";
-import type { AdjacentPost, OptionsData, PostType, WordPressPage, WordPressPost } from "./types";
+import type {
+	AdjacentPost,
+	Category,
+	OptionsData,
+	PostType,
+	WordPressPage,
+	WordPressPost,
+} from "./types";
 
 /**
  * API Base URL を取得
@@ -103,6 +110,7 @@ export const fetchPosts = async ({
 	page = 1,
 	orderby = "date",
 	order = "desc",
+	categories,
 }: {
 	postType?: string;
 	postId?: number;
@@ -110,17 +118,27 @@ export const fetchPosts = async ({
 	page?: number;
 	orderby?: string;
 	order?: "asc" | "desc";
+	categories?: number | number[];
 } = {}): Promise<WordPressPost | WordPressPost[]> => {
 	const adjustedPostType = postType === "post" ? "posts" : postType;
 	const endpoint = postId ? `${adjustedPostType}/${postId}` : adjustedPostType;
-	const params = { perPage, page, orderby, order };
+	const params: Record<string, unknown> = {
+		per_page: perPage,
+		page,
+		orderby,
+		order,
+	};
+
+	if (categories) {
+		params.categories = Array.isArray(categories)
+			? categories.join(",")
+			: categories;
+	}
 
 	return cachedRequest(endpoint, params, async () => {
 		try {
 			const response = await axios.get(`${getApiBaseUrl()}/${endpoint}`, {
-				params: postId
-					? undefined
-					: { per_page: perPage, page, orderby, order },
+				params: postId ? undefined : params,
 			});
 			return response.data;
 		} catch (error) {
@@ -138,14 +156,28 @@ export const fetchPosts = async ({
  */
 export const fetchTotalPostCount = async ({
 	postType = "posts",
+	categories,
 }: {
 	postType?: string;
+	categories?: number | number[];
 } = {}): Promise<number | null> => {
 	const adjustedPostType = postType === "post" ? "posts" : postType;
+	const params: Record<string, unknown> = {};
 
-	return cachedRequest(adjustedPostType, {}, async () => {
+	if (categories) {
+		params.categories = Array.isArray(categories)
+			? categories.join(",")
+			: categories;
+	}
+
+	return cachedRequest(adjustedPostType, params, async () => {
 		try {
-			const response = await axios.get(`${getApiBaseUrl()}/${adjustedPostType}`);
+			const response = await axios.get(
+				`${getApiBaseUrl()}/${adjustedPostType}`,
+				{
+					params,
+				},
+			);
 			return response.headers["x-wp-total"];
 		} catch (error) {
 			console.error(`Error fetching ${adjustedPostType}:`, error);
@@ -171,8 +203,36 @@ export const fetchPostType = async (postId: number): Promise<PostType> => {
 			const response = await axios.get(`${getApiBaseUrl()}/${endpoint}`);
 			return response.data;
 		} catch (error) {
-			console.error(`Error fetching post type:`, error);
+			console.error("Error fetching post type:", error);
 			return postId ? {} : [];
+		}
+	});
+};
+
+/**
+ * カデゴリデータの取得
+ * @param postType - 投稿タイプ
+ * @returns カデゴリのデータ
+ */
+export const fetchCategories = async ({
+	postType = "posts",
+	slug,
+}: {
+	postType?: string;
+	slug?: string;
+} = {}): Promise<Category[]> => {
+	const endpoint = "categories";
+	const params = { post_type: postType, slug };
+
+	return cachedRequest(endpoint, params, async () => {
+		try {
+			const response = await axios.get(`${getApiBaseUrl()}/${endpoint}`, {
+				params,
+			});
+			return response.data;
+		} catch (error) {
+			console.error(`Error fetching ${endpoint}:`, error);
+			return [];
 		}
 	});
 };
@@ -182,7 +242,9 @@ export const fetchPostType = async (postId: number): Promise<PostType> => {
  * @param postId - 投稿ID
  * @returns 隣接する投稿のデータ
  */
-export const fetchAdjacentPosts = async (postId: number): Promise<AdjacentPost | null> => {
+export const fetchAdjacentPosts = async (
+	postId: number,
+): Promise<AdjacentPost | null> => {
 	if (!postId) {
 		throw new Error("postId is required");
 	}

@@ -1,11 +1,9 @@
 <script setup>
-import { defineProps } from 'vue'
-
 const props = defineProps({
-  fill: {
-    default: '#222222'
-  }
-})
+	fill: {
+		default: "#222222",
+	},
+});
 </script>
 
 <template>

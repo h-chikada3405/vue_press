@@ -1,7 +1,7 @@
 <script setup>
-import { getPosts } from '../../../utils';
+import { getPosts } from "../../../utils";
 
-const officeData = getPosts({ postType: 'office' });
+const officeData = getPosts({ postType: "office" });
 </script>
 
 <template>

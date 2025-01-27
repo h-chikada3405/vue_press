@@ -1,32 +1,32 @@
-<script>
-export const perPage = 2;
-</script>
-
 <script setup>
 import CategoryNav from "@/components/common/CategoryNav.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import { getPosts, getTotalPostCount } from "@/utils";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { perPage } from "../index.vue";
 
 const route = useRoute();
 const currentPage = ref(Number(route.query.page) || 1);
 const totalPostCount = getTotalPostCount();
 const totalPages = ref(null);
 const Posts = getPosts({
-  perPage: perPage,
-  page: currentPage.value,
+	perPage: perPage,
+	page: currentPage.value,
 });
 
 watch(totalPostCount, (newTotalPostCount) => {
-  if (newTotalPostCount !== null) {
-    totalPages.value = Math.ceil(newTotalPostCount / perPage);
-  }
+	if (newTotalPostCount !== null) {
+		totalPages.value = Math.ceil(newTotalPostCount / perPage);
+	}
 });
 
-watch(() => route.query.page, (newPage) => {
-  currentPage.value = parseInt(newPage) || 1;
-});
+watch(
+	() => route.query.page,
+	(newPage) => {
+		currentPage.value = Number.parseInt(newPage) || 1;
+	},
+);
 </script>
 
 <template>
