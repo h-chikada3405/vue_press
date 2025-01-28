@@ -1,10 +1,11 @@
 import { type Ref, ref, watch } from "vue";
+import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { fetchPostType } from "../api";
 import type { PostType } from "../types";
 
 const getPostType = (
 	postId?: number | null,
-	routeParams?: { id: string | number },
+	routeParams?: RouteLocationNormalizedLoaded["params"],
 ): Ref<PostType | null> => {
 	const currentPostId = ref(postId || null);
 	const postType = ref<PostType | null>(null);

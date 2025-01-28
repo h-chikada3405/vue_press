@@ -1,8 +1,8 @@
 /**
- * マウント時に実行したいアニメーション
+ * マウント時とページ遷移のたびに実行するアニメーション
  *
  * @returns {void}
  */
-export const MountedAnimation = () => {
-	console.log("MountedAnimation");
+export const initPageAnimations = () => {
+	console.log("initPageAnimations");
 };

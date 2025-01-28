@@ -3,10 +3,10 @@
 </style>
 
 <script setup>
-import { markRaw } from "vue";
+import { h, markRaw } from "vue";
 import { useRouter } from "vue-router";
-import ArrowBackIOS from "../svg/ArrowBackIOS.vue";
-import ArrowForwardIOS from "../svg/ArrowForwardIOS.vue";
+import iconArrowBack from "@/assets/images/icon-arrow_back.svg";
+import iconArrowForward from "@/assets/images/icon-arrow_forward.svg";
 
 const props = defineProps({
 	currentPage: {
@@ -19,11 +19,11 @@ const props = defineProps({
 		default: 2,
 	},
 	prev: {
-		default: () => markRaw(ArrowBackIOS),
-	},
-	next: {
-		default: () => markRaw(ArrowForwardIOS),
-	},
+    default: () => markRaw(h('img', { src: iconArrowBack, alt: 'Previous' })),
+  },
+  next: {
+		default: () => markRaw(h('img', { src: iconArrowForward, alt: 'Next' })),
+  },
 	dots: {
 		default: "...",
 	},
@@ -92,7 +92,9 @@ const getPaginationPages = () => {
       :disabled="currentPage === 1"
       @click="handlePrevClick"
     >
-      <i v-if="typeof prev === 'object'"><component :is="prev" :fill="'#222222'" /></i>
+			<i v-if="typeof prev === 'object'">
+        <component :is="prev" />
+      </i>
       <span v-else>{{ prev }}</span>
     </button>
     <ul>
@@ -119,7 +121,9 @@ const getPaginationPages = () => {
       :disabled="currentPage === totalPages"
       @click="handleNextClick"
     >
-      <i v-if="typeof next === 'object'"><component :is="next" :fill="'#222222'" /></i>
+			<i v-if="typeof next === 'object'">
+        <component :is="next" />
+      </i>
       <span v-else>{{ next }}</span>
     </button>
   </div>

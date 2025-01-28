@@ -3,21 +3,20 @@
 </style>
 
 <script setup>
-import { getNextPost, getPrevPost } from "@/utils";
-import { markRaw } from "vue";
-import { getSlug } from "../../utils";
-import ArrowBackIOS from "../svg/ArrowBackIOS.vue";
-import ArrowForwardIOS from "../svg/ArrowForwardIOS.vue";
+import { getSlug, getNextPost, getPrevPost } from "@/utils";
+import { h, markRaw } from "vue";
+import iconArrowBack from "@/assets/images/icon-arrow_back.svg";
+import iconArrowForward from "@/assets/images/icon-arrow_forward.svg";
 
 const props = defineProps({
 	archive: {
 		default: "一覧へ",
 	},
 	prev: {
-		default: () => markRaw(ArrowBackIOS),
+		default: () => markRaw(h('img', { src: iconArrowBack, alt: 'Previous' })),
 	},
 	next: {
-		default: () => markRaw(ArrowForwardIOS),
+		default: () => markRaw(h('img', { src: iconArrowForward, alt: 'Next' })),
 	},
 });
 
@@ -34,7 +33,7 @@ const nextPost = getNextPost();
       :class="{ 'is-disabled': !prevPost }"
       :disabled="!prevPost"
     >
-      <i v-if="typeof prev === 'object'"><component :is="prev" :fill="'#222222'" /></i>
+      <i v-if="typeof prev === 'object'"><component :is="prev" /></i>
       <span v-else>{{ prev }}</span>
     </router-link>
     <router-link :to="`/${slug}`" class="single-pager_archive">{{ archive }}</router-link>
@@ -44,7 +43,7 @@ const nextPost = getNextPost();
       :class="{ 'is-disabled': !nextPost }"
       :disabled="!nextPost"
     >
-      <i v-if="typeof next === 'object'"><component :is="next" :fill="'#222222'" /></i>
+      <i v-if="typeof next === 'object'"><component :is="next" /></i>
       <span v-else>{{ next }}</span>
     </router-link>
   </div>
