@@ -3,10 +3,10 @@
 </style>
 
 <script setup>
-import { h, markRaw } from "vue";
-import { useRouter } from "vue-router";
 import iconArrowBack from "@/assets/images/icon-arrow_back.svg";
 import iconArrowForward from "@/assets/images/icon-arrow_forward.svg";
+import { h, markRaw } from "vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
 	currentPage: {
@@ -19,11 +19,11 @@ const props = defineProps({
 		default: 2,
 	},
 	prev: {
-    default: () => markRaw(h('img', { src: iconArrowBack, alt: 'Previous' })),
-  },
-  next: {
-		default: () => markRaw(h('img', { src: iconArrowForward, alt: 'Next' })),
-  },
+		default: () => markRaw(h("img", { src: iconArrowBack, alt: "Previous" })),
+	},
+	next: {
+		default: () => markRaw(h("img", { src: iconArrowForward, alt: "Next" })),
+	},
 	dots: {
 		default: "...",
 	},

@@ -1,20 +1,28 @@
 <script setup>
+import { onAsyncMounted } from "@/utils";
 import { nextTick, onMounted } from "vue";
-import { initPageAnimations } from "./assets/animations/index.js";
+import { useRouter } from "vue-router";
+import {
+	initPageAnimations,
+	resizedAnimations,
+} from "./assets/animations/index.js";
 import LayoutFooter from "./components/layout/Footer.vue";
 import LayoutHeader from "./components/layout/Header.vue";
 import LayoutMainimg from "./components/layout/Mainimg.vue";
-import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 onMounted(() => {
-  initPageAnimations();
+	initPageAnimations();
 
-  router.afterEach(async () => {
-    await nextTick();
-    initPageAnimations();
-  });
+	router.afterEach(async () => {
+		await nextTick();
+		initPageAnimations();
+	});
+});
+
+onAsyncMounted(() => {
+	resizedAnimations();
 });
 </script>
 

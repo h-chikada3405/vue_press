@@ -27,8 +27,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/src',
+      'gsap/ScrollTrigger': path.resolve(__dirname, 'node_modules/gsap/dist/ScrollTrigger'),
+      'gsap/MotionPathPlugin': path.resolve(__dirname, 'node_modules/gsap/dist/MotionPathPlugin')
     }
-  }
+  },
 });
 
 type CompileProps = {

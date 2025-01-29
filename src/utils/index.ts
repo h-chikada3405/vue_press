@@ -17,3 +17,4 @@ export { default as getPrevPost } from "./composables/getPrevPost";
 export { default as getNextPost } from "./composables/getNextPost";
 export { default as getField } from "./composables/getField";
 export { default as getOptions } from "./composables/getOptions";
+export { default as onAsyncMounted } from "./composables/onAsyncMounted";

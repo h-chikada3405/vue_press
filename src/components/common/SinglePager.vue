@@ -3,20 +3,20 @@
 </style>
 
 <script setup>
-import { getSlug, getNextPost, getPrevPost } from "@/utils";
-import { h, markRaw } from "vue";
 import iconArrowBack from "@/assets/images/icon-arrow_back.svg";
 import iconArrowForward from "@/assets/images/icon-arrow_forward.svg";
+import { getNextPost, getPrevPost, getSlug } from "@/utils";
+import { h, markRaw } from "vue";
 
 const props = defineProps({
 	archive: {
 		default: "一覧へ",
 	},
 	prev: {
-		default: () => markRaw(h('img', { src: iconArrowBack, alt: 'Previous' })),
+		default: () => markRaw(h("img", { src: iconArrowBack, alt: "Previous" })),
 	},
 	next: {
-		default: () => markRaw(h('img', { src: iconArrowForward, alt: 'Next' })),
+		default: () => markRaw(h("img", { src: iconArrowForward, alt: "Next" })),
 	},
 });
 
