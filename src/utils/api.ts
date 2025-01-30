@@ -216,12 +216,14 @@ export const fetchPostType = async (postId: number): Promise<PostType> => {
  */
 export const fetchCategories = async ({
 	postType = "posts",
+	taxonomy = "category",
 	slug,
 }: {
 	postType?: string;
+	taxonomy?: string;
 	slug?: string;
 } = {}): Promise<Category[]> => {
-	const endpoint = "categories";
+	const endpoint = taxonomy === "category" ? "categories" : taxonomy;
 	const params = { post_type: postType, slug };
 
 	return cachedRequest(endpoint, params, async () => {

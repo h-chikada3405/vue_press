@@ -30,7 +30,16 @@ function custom_post_type() {
     'has_archive'     => true,
     'show_in_rest'    => true,
     'rewrite'         => array('slug' => 'company/office'),
+    'taxonomies'      => array('office_category'),
   );
   register_post_type('office', $args);
+
+  $category_args = array(
+    'label'        => 'カテゴリー',
+    'public'       => true,
+    'hierarchical' => true,
+    'show_in_rest' => true,
+  );
+  register_taxonomy('office_category', 'office', $category_args);
 }
 add_action('init', 'custom_post_type');

@@ -4,14 +4,16 @@ import type { Category } from "../types";
 
 const getCategories = ({
 	postType,
+	taxonomy,
 	slug,
 }: {
 	postType?: string;
+	taxonomy?: string;
 	slug?: string;
 } = {}): Ref<Category[] | null> => {
 	const categories = ref<Category[] | null>(null);
 
-	fetchCategories({ postType, slug })
+	fetchCategories({ postType, taxonomy, slug })
 		.then((data) => {
 			categories.value = data;
 		})
