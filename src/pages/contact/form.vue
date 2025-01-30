@@ -3,8 +3,8 @@
 </style>
 
 <script setup>
-import { reactive, ref } from "vue";
 import FormField from "@/components/common/FormField.vue";
+import { reactive, ref } from "vue";
 
 const isConfirmation = ref(false);
 const formData = reactive({
@@ -34,7 +34,7 @@ const confirmForm = () => {
 };
 
 const submitForm = async () => {
-  console.log('submit')
+	console.log("submit");
 };
 </script>
 

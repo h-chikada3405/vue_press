@@ -1,13 +1,13 @@
 <script setup>
 defineProps({
-  id: String,
-  label: String,
-  type: {
-    type: String,
-    default: "text",
-  },
-  modelValue: String,
-  isConfirmation: Boolean,
+	id: String,
+	label: String,
+	type: {
+		type: String,
+		default: "text",
+	},
+	modelValue: String,
+	isConfirmation: Boolean,
 });
 defineEmits(["update:modelValue"]);
 </script>
